@@ -1,5 +1,5 @@
 alias disp="display"
-alias ll="ls -alho --color=auto"
+alias ll="ls -Alho --color=auto"
 alias ls='ls -lho --color=auto'
 alias py="python3"
 

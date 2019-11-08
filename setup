@@ -13,24 +13,31 @@ package_installed()
 create_symlink()
 {
     FILE=$1
-    if [ -f "$HOME$FILE" ]; then
+    INSTDIR=$2
+    INSTDIR="${INSTDIR:-$HOME}" 
+    # If $INSTDIR is not defined, it takes the default value $HOME
+    DOTDIR="$HOME/dotfiles"
+    
+    if [ ! -d $INSTDIR ]; then
+        mkdir $INSTDIR
+    fi
+
+    if [ -f "$INSTDIR$FILE" ]; then
         echo "$FILE already exist"
         while true; do
             read -p "Do you wish to overwrite $FILE? [y/n]" yn
             case $yn in
                 [Yy]* ) echo "Overwriting ...";
-                    rm "$HOME$FILE";
-                    ln -s "$HOME/dotfiles$FILE" "$HOME$FILE";
+                    rm "$INSTDIR$FILE";
                     break;;
                 [Nn]* ) echo "Exiting ...";
                     exit;;
                 * ) echo "Please answer yes or no";;
             esac
         done
-    else
-        echo "Creating symlink"
-        ln -s "$HOME/dotfiles$FILE" "$HOME$FILE"
     fi
+
+    ln -s "$DOTDIR$FILE" "$INSTDIR$FILE"
 }
 
 if [ ! -d $HOME/dotfiles ]; then
@@ -45,4 +52,5 @@ create_symlink /.bash_profile
 create_symlink /.bash_logout
 create_symlink /.bashrc
 create_symlink /.bashrc_aliases
+create_symlink /flake8 /home/abb/config
 
