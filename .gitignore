@@ -2,5 +2,4 @@ view/
 .netrwhist
 *.swp
 
-autoload/
 plugged/
