@@ -1,0 +1,36 @@
+[submodule ".vim/plugged/SimpylFold"]
+	path = .vim/plugged/SimpylFold
+	url = https://github.com/tmhedberg/SimpylFold
+[submodule ".vim/plugged/auto-pairs"]
+	path = .vim/plugged/auto-pairs
+	url = https://github.com/jiangmiao/auto-pairs
+[submodule ".vim/plugged/vim-gitgutter"]
+	path = .vim/plugged/vim-gitgutter
+	url = https://github.com/airblade/vim-gitgutter
+[submodule ".vim/plugged/VimCompletesMe"]
+	path = .vim/plugged/VimCompletesMe
+	url = https://github.com/ajh17/VimCompletesMe
+[submodule ".vim/plugged/vim_current_word"]
+	path = .vim/plugged/vim_current_word
+	url = https://github.com/dominikduda/vim_current_word
+[submodule ".vim/plugged/gruvbox"]
+	path = .vim/plugged/gruvbox
+	url = https://github.com/morhetz/gruvbox
+[submodule ".vim/plugged/indentLine"]
+	path = .vim/plugged/indentLine
+	url = https://github.com/Yggdroot/indentLine
+[submodule ".vim/plugged/FastFold"]
+	path = .vim/plugged/FastFold
+	url = https://github.com/Konfekt/FastFold
+[submodule ".vim/plugged/vim-airline"]
+	path = .vim/plugged/vim-airline
+	url = https://github.com/vim-airline/vim-airline
+[submodule ".vim/plugged/flake8"]
+	path = .vim/plugged/flake8
+	url = https://github.com/nvie/vim-flake8
+[submodule ".vim/plugged/vim-flake8"]
+	path = .vim/plugged/vim-flake8
+	url = https://github.com/nvie/vim-flake8
+[submodule ".vim/plugged/vimtex"]
+	path = .vim/plugged/vimtex
+	url = https://github.com/lervag/vimtex

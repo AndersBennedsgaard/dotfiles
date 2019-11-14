@@ -41,6 +41,7 @@ create_symlink()
     ln -s "$DOTDIR$FILE" "$INSTDIR$FILE"
 }
 
+# Is this necessary?
 if [ ! -d $HOME/dotfiles ]; then
     echo "/dotfiles is not located at home"
     echo "Exiting ..."
@@ -61,7 +62,7 @@ create_symlink /.vimrc
 echo
 echo "Testing if pip is installed"
 while ! $(package_installed pip); do
-    read -p "Do you wish to install pip locally? (yes/no)" yn
+    read -p "Do you wish to install pip locally? [y/n]" yn
     case $yn in
         [Yy]* ) echo "Installing ..."; 
             silent !curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py;
@@ -73,8 +74,16 @@ while ! $(package_installed pip); do
 done
 
 echo
-echo "Installing flake8"
-pip install flake8 --user
+echo "Testing if flake8 is installed"
+while ! $(packacke_installed flake8); do
+    read -p "Do you wish to install flake8 locally? [y/n]" yn
+    case $yn in
+        [Yy]* ) echo "Installing ...";
+            pip install flake8 --user;;
+        [Nn]* ) exit;;
+        * ) echo "Please answer yes or no";;
+    esac
+done
 
 echo
 echo "Setting up plugins"
