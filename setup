@@ -16,8 +16,7 @@ create_symlink()
     INSTDIR=$2
     INSTDIR="${INSTDIR:-$HOME}" 
     # If $INSTDIR is not defined, it takes the default value $HOME
-    DOTDIR="$HOME/dotfiles"
-    
+
     if [ ! -d $INSTDIR ]; then
         mkdir $INSTDIR
     fi
@@ -38,7 +37,7 @@ create_symlink()
         done
     fi
 
-    ln -s "$DOTDIR$FILE" "$INSTDIR$FILE"
+    ln -s "$PWD$FILE" "$INSTDIR$FILE"
 }
 
 # Is this necessary?
@@ -56,8 +55,10 @@ create_symlink /.bashrc
 create_symlink /.bashrc_aliases
 create_symlink /flake8 ~/.config
 
-create_symlink /.vim
+cd .vim
 create_symlink /.vimrc
+cd ..
+create_symlink /.vim
 
 echo
 echo "Testing if pip is installed"
@@ -85,3 +86,6 @@ while ! $(package_installed flake8); do
     esac
 done
 
+echo 
+echo "Setting up plugins"
+vim -E -v PlugInstall -c q -c q
