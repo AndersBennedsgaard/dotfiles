@@ -1,0 +1,11 @@
+alias disp="display"
+alias ll="ls -Alh --color=auto"
+alias ls='ls -lh --color=auto'
+alias py="python3"
+alias rm="rm -f"
+
+alias conflicts="git diff --name-only --diff-filter=U"
+alias du="du -sh */"
+alias cd..='cd ..'
+alias mktar='tar -cvf'
+alias untar='tar -xvf'
