@@ -22,7 +22,7 @@ create_symlink()
         mkdir $INSTDIR
     fi
 
-    if [ -f "$INSTDIR$FILE" ]; then
+    if [ -e "$INSTDIR$FILE" ]; then
         echo 
         echo "$FILE already exist"
         while true; do
@@ -75,7 +75,7 @@ done
 
 echo
 echo "Testing if flake8 is installed"
-while ! $(packacke_installed flake8); do
+while ! $(package_installed flake8); do
     read -p "Do you wish to install flake8 locally? [y/n]" yn
     case $yn in
         [Yy]* ) echo "Installing ...";
@@ -85,6 +85,3 @@ while ! $(packacke_installed flake8); do
     esac
 done
 
-echo
-echo "Setting up plugins"
-vim -E -c PlugInstall -c q -c q
