@@ -49,11 +49,13 @@ fi
 
 echo
 echo "Setting up symlinks"
+cd bashfiles
 create_symlink /.bash_profile
 create_symlink /.bash_logout
 create_symlink /.bashrc
 create_symlink /.bashrc_aliases
 create_symlink /flake8 ~/.config
+cd ..
 
 cd .vim
 create_symlink /.vimrc
