@@ -65,8 +65,21 @@ cd ../
 create_symlink /.vim
 
 cd tmux/
-create_symlink .tmux.conf
+create_symlink /.tmux.conf
 cd ../
+
+echo 
+echo "Testing if python3 is installed"
+while ! $(package_installed python3); do
+    read -p "Do you with to install python? [y/n]" yn
+    case $yn in
+        [Yy]* ) echo "Installing ...";
+            sudo apt-get install python3;
+            sudo apt-get install python3-distutils;;
+        [Nn]* ) exit;;
+        * ) echo "Please answer yes or no";;
+    esac
+done
 
 echo
 echo "Testing if pip is installed"
@@ -74,8 +87,8 @@ while ! $(package_installed pip); do
     read -p "Do you wish to install pip locally? [y/n]" yn
     case $yn in
         [Yy]* ) echo "Installing ..."; 
-            silent !curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py;
-            py get-pip.py --user;
+            curl -s -S https://bootstrap.pypa.io/get-pip.py -o get-pip.py > /dev/null;
+            python3 get-pip.py --user;
             rm get-pip.py;;
         [Nn]* ) exit;;
         * ) echo "Please answer yes or no";;
