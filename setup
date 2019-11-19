@@ -47,20 +47,26 @@ if [ ! -d $HOME/dotfiles ]; then
     exit
 fi
 
+cd $HOME/dotfiles/
+
 echo
 echo "Setting up symlinks"
-cd bashfiles
+cd bashfiles/
 create_symlink /.bash_profile
 create_symlink /.bash_logout
 create_symlink /.bashrc
 create_symlink /.bashrc_aliases
 create_symlink /flake8 ~/.config
-cd ..
+cd ../
 
-cd .vim
+cd .vim/
 create_symlink /.vimrc
-cd ..
+cd ../
 create_symlink /.vim
+
+cd tmux/
+create_symlink .tmux.conf
+cd ../
 
 echo
 echo "Testing if pip is installed"

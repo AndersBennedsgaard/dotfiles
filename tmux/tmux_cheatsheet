@@ -1,0 +1,10 @@
+new window     <p>+c
+next window    <p>+n
+list windows   <p>+w
+rename window  <p>+,
+
+split panes vert  <p>+v
+split panes hori  <p>+h
+kill pane         <p>+x
+switch panes      <p>+arrows, <M>+arrows
+resize panes      <p>+C+arrows
