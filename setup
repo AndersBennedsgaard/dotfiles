@@ -65,7 +65,7 @@ cd ../
 create_symlink /.vim
 
 cd tmux/
-create_symlink .tmux.conf
+create_symlink /.tmux.conf
 cd ../
 
 echo

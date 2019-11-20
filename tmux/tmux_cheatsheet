@@ -1,9 +1,15 @@
+new session    tmux new
+list sessions  tmux ls
+attach session tmux attach
+detach session <p>+d
+
 new window     <p>+c
 next window    <p>+n
 list windows   <p>+w
 rename window  <p>+,
+kill window    <p>+&
 
-split panes vert  <p>+v
+split panes verti <p>+v
 split panes hori  <p>+h
 kill pane         <p>+x
 switch panes      <p>+arrows, <M>+arrows

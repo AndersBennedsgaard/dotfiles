@@ -59,6 +59,7 @@ set nowritebackup
 set noswapfile
 
 set t_Co=256
+set term=screen-256color
 set updatetime=1000
 
 imap <F5> <Esc>:w<CR>:!clear;python %<CR>
@@ -122,7 +123,7 @@ hi CurrentWord ctermbg=53
 hi CurrentWordTwins ctermbg=239
 
 " indentline settings
-let g:indentLine_char_list = ['|', '¦', '��', '��']
+let g:indentLine_char = '|'
 
 " vim-airline settings
 let g:airline#extensions#tabline#enabled=1
