@@ -65,7 +65,9 @@ cd ../
 create_symlink /.vim
 
 cd tmux/
-create_symlink /.tmux.conf
+if [ $(package_installed tmux) ]; do
+    create_symlink /.tmux.conf
+fi
 cd ../
 
 echo
@@ -88,7 +90,8 @@ while ! $(package_installed flake8); do
     read -p "Do you wish to install flake8 locally? [y/n]" yn
     case $yn in
         [Yy]* ) echo "Installing ...";
-            pip install flake8 --user;;
+            pip install flake8 --user;
+            break;;
         [Nn]* ) exit;;
         * ) echo "Please answer yes or no";;
     esac
