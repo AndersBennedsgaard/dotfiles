@@ -56,8 +56,9 @@ create_symlink /.bash_profile
 create_symlink /.bash_logout
 create_symlink /.bashrc
 create_symlink /.bashrc_aliases
-create_symlink /flake8 ~/.config
 cd ../
+
+create_symlink /flake8 ~/.config
 
 cd .vim/
 create_symlink /.vimrc
@@ -70,14 +71,27 @@ if [ $(package_installed tmux) ]; do
 fi
 cd ../
 
+echo 
+echo "Testing if python3 is installed"
+while ! $(package_installed python3); do
+    read -p "Do you with to install python? [y/n]" yn
+    case $yn in
+        [Yy]* ) echo "Installing ...";
+            sudo apt-get install python3;
+            sudo apt-get install python3-distutils;;
+        [Nn]* ) exit;;
+        * ) echo "Please answer yes or no";;
+    esac
+done
+
 echo
 echo "Testing if pip is installed"
 while ! $(package_installed pip); do
     read -p "Do you wish to install pip locally? [y/n]" yn
     case $yn in
         [Yy]* ) echo "Installing ..."; 
-            silent !curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py;
-            py get-pip.py --user;
+            curl -s -S https://bootstrap.pypa.io/get-pip.py -o get-pip.py > /dev/null;
+            python3 get-pip.py --user;
             rm get-pip.py;;
         [Nn]* ) exit;;
         * ) echo "Please answer yes or no";;

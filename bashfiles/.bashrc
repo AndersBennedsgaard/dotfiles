@@ -19,3 +19,7 @@ if [ -f .bashrc_mac ]; then
     . .bashrc_mac
 fi
 
+if [ -f .bashrc_windows ]; then
+    . .bashrc_windows
+fi
+
