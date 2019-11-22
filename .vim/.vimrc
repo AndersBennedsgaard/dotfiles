@@ -62,6 +62,7 @@ set t_Co=256
 set term=screen-256color
 set updatetime=1000
 
+nmap <F5> :w<CR>:!clear;python %<CR>
 imap <F5> <Esc>:w<CR>:!clear;python %<CR>
 nnoremap <Tab> :bnext<CR>
 nnoremap <S-Tab> :bprevious<CR>
@@ -108,7 +109,7 @@ else
     set background=dark
     colorscheme gruvbox
 endif
-
+set fillchars+=vert:\ 
 let g:gruvbox_bold=1
 let g:gruvbox_contrast_dark='hard'
 let g:gruvbox_improved_strings=1

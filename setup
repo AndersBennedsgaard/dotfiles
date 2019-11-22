@@ -56,8 +56,9 @@ create_symlink /.bash_profile
 create_symlink /.bash_logout
 create_symlink /.bashrc
 create_symlink /.bashrc_aliases
-create_symlink /flake8 ~/.config
 cd ../
+
+create_symlink /flake8 ~/.config
 
 cd .vim/
 create_symlink /.vimrc

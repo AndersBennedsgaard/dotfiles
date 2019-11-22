@@ -3,14 +3,15 @@ list sessions  tmux ls
 attach session tmux attach
 detach session <p>+d
 
-new window     <p>+c
-next window    <p>+n
-list windows   <p>+w
-rename window  <p>+,
-kill window    <p>+&
+new window      <p>+c
+next window     <p>+n, S+Right
+previous window <p>+p, S+Left
+list windows    <p>+w
+rename window   <p>+,
+kill window     <p>+&
 
 split panes verti <p>+v
 split panes hori  <p>+h
 kill pane         <p>+x
-switch panes      <p>+arrows, <M>+arrows
+switch panes      <p>+arrows
 resize panes      <p>+C+arrows
