@@ -1,11 +1,19 @@
 alias disp="display"
-alias ll="ls -Alh --color=auto"
-alias ls='ls -lh --color=auto'
+alias ll="ls -Alh"
+alias ls='ls -lh'
 alias py="python3"
 alias rm="rm -f"
 
 alias conflicts="git diff --name-only --diff-filter=U"
+alias log='git log --all --decorate --oneline --graph'
 alias du="du -sh */"
 alias cd..='cd ..'
 alias mktar='tar -cvf'
 alias untar='tar -xvf'
+
+unamestr=$(uname)
+if [[ "$unamestr" == "freebsd" ]]; then
+    alias ls='ls -G'
+else
+    alias ls='ls --color=auto'
+fi
