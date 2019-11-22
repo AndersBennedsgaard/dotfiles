@@ -4,6 +4,10 @@
 # tmux will be installed in $HOME/local/bin.
 # It's assumed that wget and a C/C++ compiler are installed.
 
+# From 
+#  https://gist.github.com/ryin/3106801
+#  https://superuser.com/questions/1259140/how-to-install-tmux-locally-without-root-access
+
 # exit on error
 set -e
 
