@@ -10,3 +10,10 @@ alias du="du -sh */"
 alias cd..='cd ..'
 alias mktar='tar -cvf'
 alias untar='tar -xvf'
+
+unamestr=$(uname)
+if [[ "$unamestr" == "freebsd" ]]; then
+    alias ls='ls -G'
+else
+    alias ls='ls --color=auto'
+fi
