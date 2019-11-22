@@ -1,3 +1,6 @@
+print shortcuts <p>+?
+select text     S+mouse-click
+
 new session    tmux new
 list sessions  tmux ls
 attach session tmux attach
