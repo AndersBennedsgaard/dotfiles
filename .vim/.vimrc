@@ -153,9 +153,6 @@ let g:fastfold_savehook = 1
 
 " Call LLPStartPreview <root-file> if editing other file that root (main?)
 
-" Vim-tmux-focus-events settings
-set -g focus-events on
-
 " " To install new plugins, add the Plug-command.
 " "   Restart Vim, and run :PlugInstall
 " " To update plugins, run :PlugUpdate.
