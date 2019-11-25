@@ -10,3 +10,9 @@ to get submodules
 
 > ./setup
 
+Recommended Tmux version is 2.6.
+To get this as a local version, run
+
+> ~/dotfiles/tmux/tmux2.6_local_install.sh
+
+This installs libevent, ncurses and tmux2.6
