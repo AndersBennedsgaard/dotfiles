@@ -97,6 +97,8 @@ Plug 'nvie/vim-flake8'
 Plug 'lervag/vimtex'
 " Live preview of latex .pdf's
 "Plug 'xuhdev/vim-latex-live-live-preview', { 'for': 'tex' }
+" Better tmux and vim combability
+Plug 'tmux-plugins/vim-tmux-focus-events'
 call plug#end()
 filetype plugin indent on
 
@@ -150,6 +152,9 @@ let g:fastfold_savehook = 1
 " "let g:livepreview_cursorhold_recompile=0
 
 " Call LLPStartPreview <root-file> if editing other file that root (main?)
+
+" Vim-tmux-focus-events settings
+set -g focus-events on
 
 " " To install new plugins, add the Plug-command.
 " "   Restart Vim, and run :PlugInstall
