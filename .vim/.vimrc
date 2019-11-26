@@ -98,6 +98,8 @@ Plug 'nvie/vim-flake8'
 Plug 'lervag/vimtex'
 " Live preview of latex .pdf's
 "Plug 'xuhdev/vim-latex-live-live-preview', { 'for': 'tex' }
+" Better tmux and vim combability
+Plug 'tmux-plugins/vim-tmux-focus-events'
 call plug#end()
 filetype plugin indent on
 

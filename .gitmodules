@@ -33,4 +33,13 @@
 	url = https://github.com/nvie/vim-flake8
 [submodule ".vim/plugged/vimtex"]
 	path = .vim/plugged/vimtex
-	url = https://github.com/lervag/vimtex
+        url = https://github.com/lervag/vimtex
+[submodule ".vim/plugged/vim-tmux-focus-events"]
+        path = .vim/plugged/vim-tmux-focus-events
+        url = https://github.com/tmux-plugins/vim-tmux-focus-events
+[submodule ".tmux/plugins/tpm"]
+        path = .tmux/plugins/tpm
+        url = https://github.com/tmux-plugins/tpm
+[submodule ".tmux/plugins/tmux-resurrect"]
+        path = .tmux/plugins/tmux-resurrect
+        url = https://github.com/tmux-plugins/tmux-resurrect
