@@ -100,7 +100,7 @@ Plug 'lervag/vimtex'
 " Better tmux and vim combability
 Plug 'tmux-plugins/vim-tmux-focus-events'
 " For remembering stuff in Tmux restorations
-Plug 'tpope/vim-obsession'
+"Plug 'tpope/vim-obsession'
 call plug#end()
 filetype plugin indent on
 
