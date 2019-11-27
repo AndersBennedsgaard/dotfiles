@@ -41,8 +41,13 @@
         path = .tmux/plugins/tpm
         url = https://github.com/tmux-plugins/tpm
 [submodule ".tmux/plugins/tmux-resurrect"]
+<<<<<<< HEAD
 	path = .tmux/plugins/tmux-resurrect
 	url = https://github.com/tmux-plugins/tmux-resurrect
 [submodule ".vim/plugged/vim-obsession"]
 	path = .vim/plugged/vim-obsession
 	url = https://github.com/tpope/vim-obsession
+=======
+        path = .tmux/plugins/tmux-resurrect
+        url = https://github.com/tmux-plugins/tmux-resurrect
+>>>>>>> parent of d29fa1c... Added tmux-resurrect more correctly
