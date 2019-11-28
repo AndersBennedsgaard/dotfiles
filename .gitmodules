@@ -34,9 +34,6 @@
 [submodule ".vim/plugged/vimtex"]
 	path = .vim/plugged/vimtex
         url = https://github.com/lervag/vimtex
-[submodule ".vim/plugged/vim-tmux-focus-events"]
-        path = .vim/plugged/vim-tmux-focus-events
-        url = https://github.com/tmux-plugins/vim-tmux-focus-events
 [submodule ".tmux/plugins/tpm"]
         path = .tmux/plugins/tpm
         url = https://github.com/tmux-plugins/tpm
