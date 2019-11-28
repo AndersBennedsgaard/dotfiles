@@ -40,3 +40,6 @@
 [submodule ".tmux/plugins/tmux-resurrect"]
         path = .tmux/plugins/tmux-resurrect
         url = https://github.com/tmux-plugins/tmux-resurrect
+[submodule ".vim/plugged/vim-tmux-focus-events"]
+	path = .vim/plugged/vim-tmux-focus-events
+	url = https://github.com/tmux-plugins/vim-tmux-focus-events.git
