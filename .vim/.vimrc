@@ -100,6 +100,8 @@ Plug 'lervag/vimtex'
 "Plug 'xuhdev/vim-latex-live-live-preview', { 'for': 'tex' }
 " Better tmux and vim combability
 Plug 'tmux-plugins/vim-tmux-focus-events'
+" For remembering stuff in Tmux restorations
+"Plug 'tpope/vim-obsession'
 call plug#end()
 filetype plugin indent on
 
