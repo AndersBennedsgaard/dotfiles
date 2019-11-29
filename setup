@@ -66,10 +66,9 @@ cd ../
 create_symlink /.vim
 
 cd .tmux/
-if [ $(package_installed tmux) ]; do
-    create_symlink /.tmux.conf
-fi
+create_symlink /.tmux.conf
 cd ../
+create_symlink /.tmux
 
 echo 
 echo "Testing if python3 is installed"
