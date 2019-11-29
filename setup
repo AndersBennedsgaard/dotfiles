@@ -65,7 +65,7 @@ create_symlink /.vimrc
 cd ../
 create_symlink /.vim
 
-cd tmux/
+cd .tmux/
 if [ $(package_installed tmux) ]; do
     create_symlink /.tmux.conf
 fi

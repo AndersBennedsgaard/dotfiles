@@ -24,6 +24,8 @@ augroup END
 autocmd BufWinLeave * let b:winview = winsaveview()
 autocmd BufWinEnter * if exists('b:winview') | call winrestview(b:winview) | unlet b:winview
 
+source ~/.vim/plugged/restore_view.vim
+
 set nocompatible
 set shiftwidth=4
 set softtabstop=4
@@ -41,7 +43,7 @@ set confirm
 
 set foldmethod=syntax
 set foldcolumn=4
-set foldlevelstart=1
+"set foldlevelstart=1
 set viewoptions=cursor,folds,slash,unix
 
 set foldtext=NeatFoldText()

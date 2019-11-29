@@ -1,5 +1,5 @@
 print shortcuts <p>+?
-select text     S+mouse-click
+select text     S(fn)+mouse-click
 
 new session    tmux new
 list sessions  tmux ls
