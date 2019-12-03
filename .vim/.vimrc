@@ -40,6 +40,7 @@ set ruler
 set number
 set mouse=a
 set confirm
+set autowrite
 
 set foldmethod=syntax
 set foldcolumn=4
