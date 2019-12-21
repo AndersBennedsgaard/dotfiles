@@ -1,0 +1,5 @@
+Sh checker - Bashate
+$ pip install Bashate
+
+A linter for prose
+$ pip install proselint
