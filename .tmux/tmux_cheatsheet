@@ -1,10 +1,11 @@
 print shortcuts <p>+?
-select text     S(fn)+mouse-click
+select text     S/fn+mouse-click
 
-new session    tmux new
-list sessions  tmux ls
-attach session tmux attach
-detach session <p>+d
+new session     tmux new
+list sessions   tmux ls
+attach session  tmux a -t 'name'
+detach session  <p>+d
+rename sesion   <p>+$
 
 new window      <p>+c
 next window     <p>+n, S+Right
