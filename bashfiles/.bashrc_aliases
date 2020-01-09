@@ -11,6 +11,8 @@ alias cd..='cd ..'
 alias mktar='tar -cvf'
 alias untar='tar -xvf'
 
+alias update_display='source ~/dotfiles/.update_display' 
+
 unamestr=$(uname)
 if [[ "$unamestr" == "freebsd" ]]; then
     alias ls='ls -G'
