@@ -9,14 +9,27 @@ function! NeatFoldText()
     return foldtextstart . repeat(foldchar, winwidth(0)-foldtextlength) . foldtextend
 endfunction
 
-augroup remember_folds
-    autocmd!
-    autocmd BufWinLeave ?* mkview
-    autocmd BufWinEnter ?* silent! loadview
-augroup END
+function! SyntasticToggle()
+    if empty(filter(tabpagebuflist(), 'getbufvar(v:val, "&buftype") is# "quickfix"'))
+        lopen
+    else
+        lclose
+    endif
+endfunction
 
-autocmd BufWinLeave * let b:winview = winsaveview()
-autocmd BufWinEnter * if exists('b:winview') | call winrestview(b:winview) | unlet b:winview
+function! Replace() range
+    execute a:firstline . "," . a:lastline . 's/some pattern/something else/'
+endfunction
+
+"augroup remember_folds
+"    autocmd!
+"    autocmd BufWinLeave ?* mkview
+"    autocmd BufWinEnter ?* silent! loadview
+"augroup END
+
+"autocmd BufWinLeave * let b:winview = winsaveview()
+"autocmd BufWinEnter * if exists('b:winview') | call winrestview(b:winview) | unlet b:winview
+" removes indentlines
 
 source ~/.vim/plugged/restore_view.vim
 
@@ -35,6 +48,8 @@ set number
 set mouse=a
 set confirm
 set autowrite
+set mousemodel=popup
+set scrolloff=3
 
 set foldmethod=syntax
 set foldcolumn=4
@@ -142,11 +157,15 @@ set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
+let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-
+let g:syntastic_auto_jump = 0
 let g:syntastic_sh_checkers = ['bashate']
+
+hi SpellBad term=reverse ctermbg=darkgreen
+
+map <F8> <ESC>:call SyntasticToggle()<CR> 
 
 " " To install new plugins, add the Plug-command.
 " "   Restart Vim, and run :PlugInstall
