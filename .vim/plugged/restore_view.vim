@@ -59,4 +59,5 @@ augroup AutoView
     " Autosave & Load Views.
     autocmd BufWritePre,BufWinLeave ?* if MakeViewCheck() | silent! mkview | endif
     autocmd BufWinEnter ?* if MakeViewCheck() | silent! loadview | endif
+    "autocmd BufReadPost * call indentLines#IndentLinesReset()
 augroup END

@@ -9,20 +9,27 @@ function! NeatFoldText()
     return foldtextstart . repeat(foldchar, winwidth(0)-foldtextlength) . foldtextend
 endfunction
 
-function! ShowFlake8Quickfix()
-    let g:flake8_show_quickfix=1
-    call flake8#Flake8()
-    let g:flake8_show_quickfix=0
+function! SyntasticToggle()
+    if empty(filter(tabpagebuflist(), 'getbufvar(v:val, "&buftype") is# "quickfix"'))
+        lopen
+    else
+        lclose
+    endif
 endfunction
 
-augroup remember_folds
-    autocmd!
-    autocmd BufWinLeave ?* mkview
-    autocmd BufWinEnter ?* silent! loadview
-augroup END
+function! Replace() range
+    execute a:firstline . "," . a:lastline . 's/some pattern/something else/'
+endfunction
 
-autocmd BufWinLeave * let b:winview = winsaveview()
-autocmd BufWinEnter * if exists('b:winview') | call winrestview(b:winview) | unlet b:winview
+"augroup remember_folds
+"    autocmd!
+"    autocmd BufWinLeave ?* mkview
+"    autocmd BufWinEnter ?* silent! loadview
+"augroup END
+
+"autocmd BufWinLeave * let b:winview = winsaveview()
+"autocmd BufWinEnter * if exists('b:winview') | call winrestview(b:winview) | unlet b:winview
+" removes indentlines
 
 source ~/.vim/plugged/restore_view.vim
 
@@ -41,6 +48,8 @@ set number
 set mouse=a
 set confirm
 set autowrite
+set mousemodel=popup
+set scrolloff=3
 
 set foldmethod=syntax
 set foldcolumn=4
@@ -96,15 +105,15 @@ Plug 'Konfekt/FastFold'
 " Light-weight status bar at the bottom of the screen
 Plug 'vim-airline/vim-airline'
 " Show flake8(PEP8 rules) when editing .py-files with vim
-Plug 'nvie/vim-flake8'
+"Plug 'nvie/vim-flake8'
 " LaTeX implementations
 Plug 'lervag/vimtex'
-" Live preview of latex .pdf's
-"Plug 'xuhdev/vim-latex-live-live-preview', { 'for': 'tex' }
 " Better tmux and vim combability
 Plug 'tmux-plugins/vim-tmux-focus-events'
 " For remembering stuff in Tmux restorations
 "Plug 'tpope/vim-obsession'
+Plug 'vim-syntastic/syntastic'
+Plug 'tmux-plugins/vim-tmux-focus-events'
 call plug#end()
 filetype plugin indent on
 
@@ -139,25 +148,24 @@ let g:airline#extensions#tabline#enabled=1
 " SimpylFold settings
 let g:SimpylFold_docstring_preview=1
 
-" vim-flake8 settings
-let g:flake8_show_in_gutter=1
-let g:flake8_quickfix_location="topleft"
-let g:flake8_show_quickfix=0
-autocmd FileType python map <buffer> <F6> :call flake8#Flake8()<CR>
-autocmd BufWritePost *.py :call flake8#Flake8()
-command Quickfix :call ShowFlake8Quickfix()
-
 " FastFold settings
 let g:fastfold_savehook = 1
 
-" vim-latex-live-preview settings
-"autocmd Filetype tex setl updatetime=1 " suggested updatetime=1000
-"let g:livepreview_previewer = 'open -a Preview' " set the .pdf preview-software. Here 'Preview' is used
-" " command LatexPreview :call LLPStartPreview
-" If you do not want recompilation on cursor hold but only when written on disk:
-" "let g:livepreview_cursorhold_recompile=0
+" Syntastic setting
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
 
-" Call LLPStartPreview <root-file> if editing other file that root (main?)
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_auto_jump = 0
+let g:syntastic_sh_checkers = ['bashate']
+
+hi SpellBad term=reverse ctermbg=darkgreen
+
+map <F8> <ESC>:call SyntasticToggle()<CR> 
 
 " " To install new plugins, add the Plug-command.
 " "   Restart Vim, and run :PlugInstall
