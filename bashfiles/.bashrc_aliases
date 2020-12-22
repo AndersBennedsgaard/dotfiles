@@ -20,3 +20,7 @@ if [[ "$unamestr" == "freebsd" ]]; then
 else
     alias ls='ls --color=auto'
 fi
+
+# WSL shortcuts:
+alias start_jupyter='jupyter notebook --ip $(hostname -I)'
+alias start_docker='sudo /etc/init.d/docker start'
