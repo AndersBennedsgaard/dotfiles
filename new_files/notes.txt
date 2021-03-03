@@ -1,0 +1,14 @@
+See if MAD is more stable for response times
+Standard deviations are very responsive to the reponse times - which is why log is used
+Without log, thresholds are easier to set
+
+How are the response times shaped? 
+Skewed normal distribution?
+How about after log?
+
+
+plot:
+	x = ranges of durations (0-50, 50-100, 100-150, ...)
+	y = number of counts/frequency of counts over window
+	style: bar plot
+
