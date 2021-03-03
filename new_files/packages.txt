@@ -1,5 +1,0 @@
-vim
-neovim
-python3-pip
-git
-zoom
