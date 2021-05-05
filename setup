@@ -13,22 +13,21 @@ package_installed()
 create_symlink()
 {
     FILE=$1
-    INSTDIR=$2
-    INSTDIR="${INSTDIR:-$HOME}" 
-    # If $INSTDIR is not defined, it takes the default value $HOME
+    INSTNAME=$2
 
-    if [ ! -d $INSTDIR ]; then
-        mkdir $INSTDIR
+    if [ ! -e "$FILE" ]; then
+        echo "$FILE does not exist"
+        echo "Exiting ..."
+        exit
     fi
-
-    if [ -e "$INSTDIR$FILE" ]; then
-        echo 
-        echo "$FILE already exist"
+    
+    if [ -e "$INSTNAME" ]; then
+        echo "$INSTNAME already exist"
         while true; do
-            read -p "Do you wish to overwrite $FILE? [y/n]" yn
+            read -p "Do you wish to overwrite $(basename $INSTNAME)? [y/n]" yn
             case $yn in
                 [Yy]* ) echo "Overwriting ...";
-                    rm "$INSTDIR$FILE";
+                    rm "$INSTNAME";
                     break;;
                 [Nn]* ) echo "Exiting ...";
                     exit;;
@@ -37,38 +36,56 @@ create_symlink()
         done
     fi
 
-    ln -s "$PWD$FILE" "$INSTDIR$FILE"
+    ln -s "$FILE" "$INSTNAME"
 }
 
-# Is this necessary?
-if [ ! -d $HOME/dotfiles ]; then
-    echo "/dotfiles is not located at home"
-    echo "Exiting ..."
-    exit
-fi
+BASEDIR=$(dirname $0)
 
-cd $HOME/dotfiles/
-
-echo
 echo "Setting up symlinks"
-cd bashfiles/
-create_symlink /.bash_profile
-create_symlink /.bash_logout
-create_symlink /.bashrc
-create_symlink /.bashrc_aliases
-cd ../
+create_symlink $BASEDIR/bash_profile ~/.bash_profile
+create_symlink $BASEDIR/bash_logout ~/.bash_logout
+create_symlink $BASEDIR/bashrc ~/.bashrc
+create_symlink $BASEDIR/bash_aliases ~/.bash_aliases
 
-create_symlink /flake8 ~/.config
 
-cd .vim/
-create_symlink /.vimrc
-cd ../
-create_symlink /.vim
 
-cd .tmux/
-create_symlink /.tmux.conf
-cd ../
-create_symlink /.tmux
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+echo "Not correctly configured"
+exit 1
 
 echo 
 echo "Testing if python3 is installed"

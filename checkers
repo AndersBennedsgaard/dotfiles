@@ -1,8 +1,0 @@
-Sh checker - Bashate
-$ pip install Bashate
-
-Python checker - flake8
-$ pip install flake8
-
-A linter for prose
-$ pip install proselint
