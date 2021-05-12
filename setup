@@ -29,8 +29,8 @@ create_symlink()
                 [Yy]* ) echo "Overwriting ...";
                     rm "$INSTNAME";
                     break;;
-                [Nn]* ) echo "Exiting ...";
-                    exit;;
+                [Nn]* ) echo "Skipping ...";
+                    return 1;;
                 * ) echo "Please answer yes or no";;
             esac
         done
@@ -39,13 +39,22 @@ create_symlink()
     ln -s "$FILE" "$INSTNAME"
 }
 
-BASEDIR=$(dirname $0)
+SCRIPTFULLPATH=$(realpath $0)
+BASEDIR=$(dirname $SCRIPTFULLPATH)
 
 echo "Setting up symlinks"
 create_symlink $BASEDIR/bashrc ~/.bashrc
 create_symlink $BASEDIR/bash_aliases ~/.bash_aliases
+
 create_symlink $BASEDIR/tmux.conf ~/.tmux.conf
 
+if [ ! -d ~/.tmux/plugins/tpm ]; then
+    echo "Installing Tmux Plugin Manager:"
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+fi
+
+echo "Installing Tmux plugins:"
+~/.tmux/plugins/tpm/bin/install_plugins
 
 
 
@@ -77,13 +86,7 @@ create_symlink $BASEDIR/tmux.conf ~/.tmux.conf
 
 
 
-
-
-
-
-
-echo "Not correctly configured"
-exit 1
+exit 0
 
 echo 
 echo "Testing if python3 is installed"
