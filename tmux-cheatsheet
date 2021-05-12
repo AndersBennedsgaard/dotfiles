@@ -1,0 +1,29 @@
+$ tmux new -s <name>
+$ tmux a -t <name>
+
+Prefix: 
+    Ctrl-a
+
+Meta:
+    Alt
+
+New window:
+    <prefix>-c
+
+Change window:
+    <prefix>-<0-9>
+
+Split panes:
+    <prefix>-v
+    <prefix>-h
+
+Resize panes:
+    <prefix>-C-<arrows>
+
+Change panes:
+    <prefix>-<arrows>
+    <meta>-<arrows>
+
+Zoom in/out of pane:
+    <prefix>-z
+
