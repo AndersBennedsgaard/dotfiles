@@ -42,11 +42,9 @@ create_symlink()
 BASEDIR=$(dirname $0)
 
 echo "Setting up symlinks"
-create_symlink $BASEDIR/bash_profile ~/.bash_profile
-create_symlink $BASEDIR/bash_logout ~/.bash_logout
 create_symlink $BASEDIR/bashrc ~/.bashrc
 create_symlink $BASEDIR/bash_aliases ~/.bash_aliases
-
+create_symlink $BASEDIR/tmux.conf ~/.tmux.conf
 
 
 
