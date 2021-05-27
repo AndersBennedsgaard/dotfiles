@@ -124,6 +124,10 @@ if command -v kind &> /dev/null; then
     source <(kind completion bash)
 fi
 
+if command -v flux &> /dev/null; then
+    source <(flux completion bash)
+fi
+
 export VISUAL=vim
 export EDITOR="$VISUAL"
 if [ -d /opt/mssql-tools/bin/ ]; then
