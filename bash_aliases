@@ -12,6 +12,8 @@ alias mktar='tar -cvf'
 alias untar='tar -xvf'
 
 alias vim='nvim'
+alias gs='git status'
+alias gd='git diff'
 
 container-ip() {
     if [ $# -eq 0 ]; then
