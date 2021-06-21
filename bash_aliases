@@ -43,6 +43,7 @@ alias k='kubectl'
 # To enable shell completion for the alias
 complete -F __start_kubectl k
 alias wpo='watch kubectl get pods'
+alias wf='watch flux get all -A'
 dashboard () {
     helm install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --set extraArgs="{--token-ttl=36000}" --wait &> /dev/null
     echo "Access the dashboard at:"
