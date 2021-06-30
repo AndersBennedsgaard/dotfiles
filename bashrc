@@ -130,14 +130,17 @@ fi
 
 export VISUAL=vim
 export EDITOR="$VISUAL"
-if [ -d /opt/mssql-tools/bin/ ]; then
+if [ -d "/opt/mssql-tools/bin/" ]; then
     export PATH="/opt/mssql-tools/bin/:$PATH"
 fi
-if [ -d $HOME/.krew/ ]; then
+if [ -d "$HOME/.krew/" ]; then
     export PATH="$HOME/.krew/bin:$PATH"
 fi
-if [ -d $HOME/azuredatastudio-linux-x64/ ]; then
-    export PATH="$PATH:$HOME/azuredatastudio-linux-x64"
+if [ -d "$HOME/azuredatastudio-linux-x64/" ]; then
+    export PATH="$HOME/azuredatastudio-linux-x64:$PATH"
+fi
+if [ -d "$HOME/.local/bin:$PATH" ]; then
+    export PATH="$HOME/.local/bin:$PATH"
 fi
 # Use Docker BuildKit:
 export DOCKER_BUILDKIT=1
