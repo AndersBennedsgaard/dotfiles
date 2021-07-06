@@ -127,6 +127,9 @@ fi
 if command -v flux &> /dev/null; then
     source <(flux completion bash)
 fi
+if command -v kustomize &> /dev/null; then
+    source <(kustomize completion bash)
+fi
 
 export VISUAL=vim
 export EDITOR="$VISUAL"
