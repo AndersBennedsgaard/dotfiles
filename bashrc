@@ -154,3 +154,6 @@ export DOCKER_BUILDKIT=1
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
 
+# source .bash_custom if it exists for non-git configs
+[ -f "$HOME/.bash_custom" ] && source "$HOME/.bash_custom"
+
