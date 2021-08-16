@@ -44,6 +44,7 @@ alias k='kubectl'
 complete -F __start_kubectl k
 alias wpo='watch kubectl get pods'
 alias wf='watch flux get all -A'
+alias fsync='flux reconcile source git flux-system'
 alias kga='kubectl api-resources --namespaced --verbs=list -o name | xargs -n 1 kubectl get --ignore-not-found --show-kind'
 dashboard () {
     helm install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --set extraArgs="{--token-ttl=36000}" --wait &> /dev/null
