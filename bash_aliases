@@ -14,6 +14,7 @@ alias untar='tar -xvf'
 alias vim='nvim'
 alias gs='git status'
 alias gd='git diff'
+alias gf='git fetch --all'
 
 container-ip() {
     if [ $# -eq 0 ]; then
