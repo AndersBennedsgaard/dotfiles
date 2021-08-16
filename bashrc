@@ -130,6 +130,9 @@ fi
 if command -v kustomize &> /dev/null; then
     source <(kustomize completion bash)
 fi
+if command -v yq &> /dev/null; then
+    source <(yq shell-completion bash)
+fi
 
 export VISUAL=vim
 export EDITOR="$VISUAL"
