@@ -16,6 +16,18 @@ alias gs='git status'
 alias gd='git diff'
 alias gf='git fetch --all'
 
+e64() {
+    if [ "$2" == "-d" ]; then
+        echo -n "$1" | base64 --decode
+        echo
+    else
+        echo -n "$1" | base64
+    fi
+}
+
+d64() {
+    e64 "$1" -d
+}
 container-ip() {
     if [ $# -eq 0 ]; then
         echo -e "$(docker ps -q | xargs docker inspect -f '{{.Name}}: \t{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}')"
