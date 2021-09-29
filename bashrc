@@ -133,6 +133,9 @@ fi
 if command -v yq &> /dev/null; then
     source <(yq shell-completion bash)
 fi
+if command -v direnv &> /dev/null; then
+    eval "$(direnv hook bash)"
+fi
 
 export VISUAL=vim
 export EDITOR="$VISUAL"
