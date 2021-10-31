@@ -151,6 +151,7 @@ fi
 if [ -d "$HOME/.local/bin:$PATH" ]; then
     export PATH="$HOME/.local/bin:$PATH"
 fi
+[ -f "$HOME/.pyenv/bin/pyenv" ] && export PATH="$HOME/.pyenv/bin:$PATH"
 # Use Docker BuildKit:
 export DOCKER_BUILDKIT=1
 
@@ -159,4 +160,3 @@ export DOCKER_BUILDKIT=1
 
 # source .bash_custom if it exists for non-git configs
 [ -f "$HOME/.bash_custom" ] && source "$HOME/.bash_custom"
-
