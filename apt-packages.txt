@@ -6,3 +6,4 @@ apt-transport-https
 ca-certificates
 curl
 gnupg
+tmux
