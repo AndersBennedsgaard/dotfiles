@@ -1,0 +1,8 @@
+vim
+neovim
+python3-pip
+git
+apt-transport-https
+ca-certificates
+curl
+gnupg
