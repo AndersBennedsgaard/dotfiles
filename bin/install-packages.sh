@@ -3,10 +3,10 @@
 set -e
 
 SCRIPTFULLPATH=$(realpath $0)
-BASEDIR=$(dirname $SCRIPTFULLPATH)
+BASEDIR=$(dirname "$SCRIPTFULLPATH")
 
 echo "Install using apt:"
-cat "$BASEDIR/../apt-packages.txt" | xargs apt install -y
+xargs apt install -y < "$BASEDIR/../apt-packages.txt"
 
 echo "Install using snap:"
 snap install --classic code
