@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 SCRIPTFULLPATH=$(realpath $0)
 BASEDIR=$(dirname $SCRIPTFULLPATH)
 
