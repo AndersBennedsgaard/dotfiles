@@ -145,9 +145,6 @@ fi
 if [ -d "$HOME/.krew/" ]; then
     export PATH="$HOME/.krew/bin:$PATH"
 fi
-if [ -d "$HOME/azuredatastudio-linux-x64/" ]; then
-    export PATH="$HOME/azuredatastudio-linux-x64:$PATH"
-fi
 if [ -d "$HOME/.local/bin:$PATH" ]; then
     export PATH="$HOME/.local/bin:$PATH"
 fi
