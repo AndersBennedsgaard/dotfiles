@@ -110,6 +110,7 @@ fi
 
 if command -v kubectl &> /dev/null; then
     source <(kubectl completion bash)
+    export KUBECONFIG=$HOME/.kube/config
 fi
 
 if command -v helm &> /dev/null; then
@@ -136,6 +137,9 @@ fi
 if command -v direnv &> /dev/null; then
     eval "$(direnv hook bash)"
 fi
+if command -v k9s &> /dev/null; then
+    export XDG_CONFIG_HOME="$HOME"
+fi
 
 export VISUAL=vim
 export EDITOR="$VISUAL"
@@ -157,3 +161,6 @@ export DOCKER_BUILDKIT=1
 
 # source .bash_custom if it exists for non-git configs
 [ -f "$HOME/.bash_custom" ] && source "$HOME/.bash_custom"
+
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
