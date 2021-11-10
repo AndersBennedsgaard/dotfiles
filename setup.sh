@@ -46,3 +46,8 @@ cmd "./bin/setup-vim.sh"
 
 echo "Set up tmux. Run:"
 cmd "./bin/setup-tmux.sh"
+
+echo "Set up vim/neovim"
+wait_for_enter
+
+echo "Done!"
