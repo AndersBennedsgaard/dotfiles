@@ -10,7 +10,8 @@ alias log='git log --all --decorate --oneline --graph'
 alias mktar='tar -cvf'
 alias untar='tar -xvf'
 
-alias gs='git status'
+alias vim='nvim'
+alias gs='git fetch && git status'
 alias gd='git diff'
 alias gf='git fetch --all'
 
