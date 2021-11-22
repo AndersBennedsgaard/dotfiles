@@ -36,3 +36,4 @@ BASEDIR=$(dirname "$SCRIPTFULLPATH")
 
 create-symlink "$BASEDIR/../configs/bashrc" ~/.bashrc
 create-symlink "$BASEDIR/../configs/bash_aliases" ~/.bash_aliases
+create-symlink "$BASEDIR/../configs/bash_custom" ~/.bash_custom

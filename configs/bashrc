@@ -108,59 +108,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-if command -v kubectl &> /dev/null; then
-    source <(kubectl completion bash)
-    export KUBECONFIG=$HOME/.kube/config
-fi
-
-if command -v helm &> /dev/null; then
-    source <(helm completion bash)
-fi
-
-if command -v minikube &> /dev/null; then
-    source <(minikube completion bash)
-fi
-
-if command -v kind &> /dev/null; then
-    source <(kind completion bash)
-fi
-
-if command -v flux &> /dev/null; then
-    source <(flux completion bash)
-fi
-if command -v kustomize &> /dev/null; then
-    source <(kustomize completion bash)
-fi
-if command -v yq &> /dev/null; then
-    source <(yq shell-completion bash)
-fi
-if command -v direnv &> /dev/null; then
-    eval "$(direnv hook bash)"
-fi
-if command -v k9s &> /dev/null; then
-    export XDG_CONFIG_HOME="$HOME"
-fi
-
-export VISUAL=vim
-export EDITOR="$VISUAL"
-if [ -d "/opt/mssql-tools/bin/" ]; then
-    export PATH="/opt/mssql-tools/bin/:$PATH"
-fi
-if [ -d "$HOME/.krew/" ]; then
-    export PATH="$HOME/.krew/bin:$PATH"
-fi
-if [ -d "$HOME/.local/bin:$PATH" ]; then
-    export PATH="$HOME/.local/bin:$PATH"
-fi
-[ -f "$HOME/.pyenv/bin/pyenv" ] && export PATH="$HOME/.pyenv/bin:$PATH"
-# Use Docker BuildKit:
-export DOCKER_BUILDKIT=1
-
-# Generated for envman. Do not edit.
-[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
-
-# source .bash_custom if it exists for non-git configs
-[ -f "$HOME/.bash_custom" ] && source "$HOME/.bash_custom"
-
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+# source .bash_custom if it exists 
+[ -f "$HOME/.bash_custom" ] && source "$HOME/.bash_custom"  
 
