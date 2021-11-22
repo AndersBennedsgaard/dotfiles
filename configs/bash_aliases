@@ -11,7 +11,7 @@ alias mktar='tar -cvf'
 alias untar='tar -xvf'
 
 alias nv='nvim'
-alias gs='git fetch && git status'
+alias gs='git status'
 alias gd='git diff'
 alias gf='git fetch --all'
 
