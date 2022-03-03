@@ -1,0 +1,44 @@
+---
+- name: Install gnupg
+  package:
+    name: gnupg
+    state: present
+  when: (apt_repositories | length) > 0
+
+- name: Add GPG keys
+  apt_key:
+    url: "{{ item.gpg_url }}"
+    state: present
+  loop: "{{ apt_repositories }}"
+
+- name: Add APT repository
+  apt_repository:
+    repo: "{{ item.repo }}"
+  loop: "{{ apt_repositories }}"
+
+- name: Install packages
+  package:
+    name: "{{ item.name | default(item) }}"
+    state: "{{ item.state | default('present') }}"
+  loop: "{{ install_packages }}"
+
+- name: install global Pip packages
+  pip:
+    name: "{{ item.name | default(item) }}"
+    state: "{{ item.state | default('present') }}"
+    version: "{{ item.version | default(omit) }}"
+    executable: "{{ item.executable | default(omit) }}"
+  loop: "{{ pip_packages }}"
+
+# TODO: when not installed
+- import_tasks: tasks/install-brew.yaml
+  when: configure_homebrew
+
+- name: Install Brew packages
+  community.general.homebrew:
+    path: "/usr/local/bin:/opt/homebrew/bin:/home/linuxbrew/.linuxbrew/bin"
+    name: "{{ item.name | default(item) }}"
+    state: "{{ item.state | default('present') }}"
+  loop: "{{ brew_packages }}"
+  become_user: "{{ user_name }}"
+  become: true

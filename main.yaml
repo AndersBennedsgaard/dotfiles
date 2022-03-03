@@ -1,0 +1,16 @@
+---
+- hosts: localhost
+  become: true
+
+  vars_files:
+    - vars/default-configs.yaml
+
+  tasks:
+    - import_tasks: tasks/users.yaml
+      when: user_name is defined
+    - import_tasks: tasks/packages.yaml
+      when: configure_packages
+    - import_tasks: tasks/terminal.yaml
+      when: configure_terminal
+    - import_tasks: tasks/dotfiles.yaml
+      when: configure_dotfiles

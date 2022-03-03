@@ -1,0 +1,23 @@
+---
+- name: Get files
+  get_url:
+    url: "{{ item.url }}"
+    dest: "{{ item.location }}"
+    mode: "{{ item.mode | default('0644') }}"
+
+- name: Unarchive objects
+  unarchive:
+    src: "{{ item.location }}"
+    dest: "{{ item.unarchiveLocation }}"
+  when: "{{ item.unarchive }}"
+
+- name: Ensure {{ item.check_file }} exist
+  stat:
+    path: "{{ item.check_file }}"
+  register: file_exists
+  when: "{{ item.check_file }}"
+
+- name: Fail if {{ item.check_file }} does not exist
+  fail:
+    msg: "{{ item.check_file }} does not exist"
+  when: "{{ item.check_file }} and (not file_exists.stat.exists)"

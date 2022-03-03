@@ -1,0 +1,14 @@
+---
+- name: Ensure folders exist
+  file:
+    path: "{{ item.dest | default('~/') | dirname }}"
+    state: directory
+  become: false
+  loop: "{{ dotfiles }}"
+
+- name: Copy items to its destination
+  copy:
+    src: "{{ item.name | default(item) }}"
+    dest: "{{ item.dest | default('~/' + (item.name | default(item) | basename)) }}"
+  become: false
+  loop: "{{ dotfiles }}"

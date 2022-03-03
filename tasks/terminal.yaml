@@ -1,0 +1,20 @@
+---
+# TODO: set up oh-my-zsh
+# TODO: custom keyboard shortcuts
+
+- name: Configure Git
+  community.general.git_config:
+    name: "{{ item.name }}"
+    scope: "{{ item.scope | default('global') }}"
+    repo: '{{ item.repo | default(''""'') }}'
+    value: "{{ item.value }}"
+  loop: "{{ git_configs }}"
+
+- name: "Change shell"
+  user:
+    name: "{{ user_name }}"
+    shell: "{{ user_shell }}"
+
+- name: Run custom commands
+  include_tasks: tasks/custom-command.yaml
+  loop: "{{ get_files }}"
