@@ -47,6 +47,7 @@ pip_packages:
   - ansible
   - flake8
   - virtualenv
+  - ansible-lint
 
 # Packages installed with brew
 brew_packages:
