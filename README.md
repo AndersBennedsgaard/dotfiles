@@ -25,6 +25,32 @@ ansible-playbook main.yaml -K
 
 ## Development
 
+Testing can either be done with Vagrant (recommended) or Docker.
+
+### Vagrant
+
+A Vagrantfile is located at the root of the project, which runs a `generic/ubuntu2004` box with the Ansible playbook as the provisioner.
+Run the VM/playbook with:
+
+```bash
+vagrant up
+```
+
+Run the playbook again, after the VM is running:
+
+```bash
+vagrant provision
+```
+
+Destroy the VM with:
+
+```bash
+vagrant destroy
+```
+
+When asked for the BECOME password, use `vagrant` (which is also the username)
+### Docker
+
 A container with Ubuntu 20.04 is used for testing, which runs `sshd` with the ssh-keys found in `ssh/`.
 By running the container with the name `ansible-test`, Ansible can ssh into the container and deploy the playbook.
 To build and run the container, use the following:
@@ -37,5 +63,5 @@ docker run --name ansible-test -d --rm -p 2222:22 ansible-test:latest
 Run the playbook with:
 
 ```sh
-ansible-playbook tests/main.yaml -i tests/inventory
+ansible-playbook main.yaml -i tests/inventory
 ```

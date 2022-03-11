@@ -11,20 +11,33 @@ user_shell: /bin/zsh
 
 apt_repositories:
   - gpg_url: https://download.docker.com/linux/ubuntu/gpg
-    repo: deb https://download.docker.com/linux/ubuntu bionic stable
+    keyring: /usr/share/keyrings/docker-archive-keyring.gpg
+    repo: deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu focal stable # impish stable for normal Ubuntu. focal stable for Vagrant
   - gpg_url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
-    repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
+    keyring: /usr/share/keyrings/kubernetes-archive-keyring.gpg
+    repo: deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main
   - gpg_url: https://packages.microsoft.com/keys/microsoft.asc
-    repo: deb https://packages.microsoft.com/repos/code stable main
+    repo: deb [arch=amd64] https://packages.microsoft.com/repos/code stable main
+
+# Upgrade all packages
+upgrade_packages: true
 
 # Packages installed by the package module.
-# In 'name'-'state' format, otherwise use the object as default name
+# In 'name' and 'state' format, otherwise use the object as default name
 install_packages:
   - sudo
   - git
   - gnupg
   - apt-transport-https
   - ca-certificates
+  - gconf2
+  - libasound2
+  - libgtk2.0-0
+  - libxss1
+  - libxcb-dri3-0
+  - libdrm2
+  - libgbm1
+  - libxshmfence1
   - lsb-release
   - curl
   - wget
@@ -33,9 +46,9 @@ install_packages:
   - python3-pip
   - tmux
   - pv
-  - docker-ce
-  - docker-ce-cli
   - containerd.io
+  - docker-ce-cli
+  - docker-ce
   - zsh
   - kubectl
   - jq
@@ -58,18 +71,15 @@ brew_packages:
   - derailed/k9s/k9s
   - fluxcd/tap/flux
 
+install_ohmyzsh: true
+install_go: true
+
 get_files:
   - url: https://golang.org/dl/go1.17.7.linux-amd64.tar.gz
     location: ~/go.tar.gz
     unarchive: true
     unarchiveLocation: /usr/local
     check_command: go version
-    # sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
-  - url: https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh
-    location: ~/ohmyzsh-install.sh
-    mode: 0755
-    command: chmod +x ohmyzsh-install.sh && ./ohmyzsh-install.sh
-    check_file: ~/.oh-my-zsh/something
 
 # Location of files either in an array format, or in 'name', 'dest' format.
 # Files in array format, are copied to "~/" with the same name.

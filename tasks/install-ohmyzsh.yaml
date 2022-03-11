@@ -1,0 +1,27 @@
+---
+- name: Get oh-my-zsh
+  get_url:
+    url: "https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
+    dest: "/tmp/ohmyzsh-install.sh"
+    mode: 0755
+  become_user: "{{ user_name }}"
+  become: true
+
+- name: Run installation
+  shell: /tmp/ohmyzsh-install.sh
+  become_user: "{{ user_name }}"
+  become: true
+
+- name: Ensure ~/.oh-my-zsh/ exist
+  stat:
+    path: ~/.oh-my-zsh/
+  register: file
+  become_user: "{{ user_name }}"
+  become: true
+
+- name: Fail if file does not exist
+  fail:
+    msg: "~/.oh-my-zsh/ does not exist"
+  when: "not file.stat.exists"
+  become_user: "{{ user_name }}"
+  become: true

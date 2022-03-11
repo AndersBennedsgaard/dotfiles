@@ -4,32 +4,23 @@
     path: /home/linuxbrew/.linuxbrew/bin/brew
   register: homebrew
 
-- name: Ensure sudo, git, and curl is installed
-  package:
-    name:
-      - sudo
-      - git
-      - curl
-    state: present
-  when: not homebrew.stat.exists
-
-- name: Determine Homebrew ownership variables
-  set_fact:
-    homebrew_user: "{{ user_name | default(ansible_user_id) }}"
-    homebrew_group: "{{ user_group | default(ansible_user_gid) }}"
-  when: not homebrew.stat.exists
-
-- name: Get Homebrew
-  get_url:
-    url: https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
-    dest: ~/install-brew.sh
-    mode: 0755
-  become_user: "{{ homebrew_user }}"
-  become: true
-  when: not homebrew.stat.exists
-
 - name: Install Homebrew
-  command: ~/install-brew.sh
-  become_user: "{{ homebrew_user }}"
-  become: true
+  block:
+    - name: Ensure sudo, git, and curl is installed
+      package:
+        name:
+          - sudo
+          - git
+          - curl
+        state: present
+      become: true
+
+    - name: Get Homebrew
+      get_url:
+        url: https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
+        dest: /tmp/install-brew.sh
+        mode: 0777
+
+    - name: Install Homebrew
+      command: /tmp/install-brew.sh
   when: not homebrew.stat.exists

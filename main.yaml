@@ -1,9 +1,12 @@
 ---
-- hosts: localhost
-  become: true
+- hosts: all
+  become: false
 
   vars_files:
     - vars/default-configs.yaml
+
+  # roles:
+  #   - role: gantsign.visual-studio-code
 
   tasks:
     - import_tasks: tasks/users.yaml

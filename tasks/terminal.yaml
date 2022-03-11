@@ -1,7 +1,4 @@
 ---
-# TODO: set up oh-my-zsh
-# TODO: custom keyboard shortcuts
-
 - name: Configure Git
   community.general.git_config:
     name: "{{ item.name }}"
@@ -15,6 +12,6 @@
     name: "{{ user_name }}"
     shell: "{{ user_shell }}"
 
-- name: Run custom commands
-  include_tasks: tasks/custom-command.yaml
-  loop: "{{ get_files }}"
+- name: Install oh-my-zsh
+  include_tasks: tasks/install-ohmyzsh.yaml
+  when: install_ohmyzsh
