@@ -40,17 +40,17 @@ jobs:
         run: sudo pip3 install ansible
 
       - name: Test the playbook's syntax.
-        run: ansible-playbook main.yml --syntax-check
+        run: ansible-playbook main.yaml --syntax-check
 
       - name: Test the playbook.
-        run: ansible-playbook main.yml
+        run: ansible-playbook main.yaml
         env:
           ANSIBLE_FORCE_COLOR: "1"
 
       - name: Idempotence check.
         run: |
           idempotence=$(mktemp)
-          ansible-playbook main.yml | tee -a ${idempotence}
+          ansible-playbook main.yaml | tee -a ${idempotence}
           tail ${idempotence} | grep -q 'changed=0.*failed=0' && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)
         env:
           ANSIBLE_FORCE_COLOR: "1"
