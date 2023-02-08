@@ -17,7 +17,7 @@ Install the dotfiles using Ansible, with:
 git clone git@github.com:AndersBennedsgaard/dotfiles.git
 cd dotfiles
 
-pip insall ansible
+pip install ansible
 
 ansible-galaxy install -r requirements.yaml
 ansible-playbook main.yaml -K
@@ -30,7 +30,7 @@ Testing can either be done with Vagrant (recommended) or Docker.
 ### Vagrant
 
 A Vagrantfile is located at the root of the project, which runs a `generic/ubuntu2004` box with the Ansible playbook as the provisioner.
-Run the VM/playbook with:
+Boot up the VM and run the playbook with:
 
 ```bash
 vagrant up
@@ -49,14 +49,15 @@ vagrant destroy
 ```
 
 When asked for the BECOME password, use `vagrant` (which is also the username)
+
 ### Docker
 
-A container with Ubuntu 20.04 is used for testing, which runs `sshd` with the ssh-keys found in `ssh/`.
+A container with Ubuntu 20.04 is used for testing, which runs `sshd` with the ssh-keys found in `docker/ssh/`.
 By running the container with the name `ansible-test`, Ansible can ssh into the container and deploy the playbook.
 To build and run the container, use the following:
 
 ```bash
-docker build -t ansible-test:latest -f docker/Dockerfile .
+docker build -t ansible-test:latest docker/
 docker run --name ansible-test -d --rm -p 2222:22 ansible-test:latest
 ```
 
