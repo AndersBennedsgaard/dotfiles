@@ -1,5 +1,6 @@
 ---
-- hosts: all
+- name: Main playbook
+  hosts: all
   become: false
 
   vars_files:

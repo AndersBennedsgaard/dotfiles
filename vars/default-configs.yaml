@@ -11,14 +11,12 @@ user_shell: /bin/zsh
 
 apt_repositories:
   - gpg_url: https://download.docker.com/linux/ubuntu/gpg
-    keyring: /usr/share/keyrings/docker-archive-keyring.gpg
+    dest: /etc/apt/trusted.gpg.d/docker-archive-keyring.asc
     # impish stable repo for normal Ubuntu. focal stable for Vagrant
-    repo: deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu impish stable
-  - gpg_url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
-    keyring: /usr/share/keyrings/kubernetes-archive-keyring.gpg
-    repo: deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main
+    repo: deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/docker-archive-keyring.asc] https://download.docker.com/linux/ubuntu focal stable
   - gpg_url: https://packages.microsoft.com/keys/microsoft.asc
-    repo: deb [arch=amd64] https://packages.microsoft.com/repos/code stable main
+    dest: /etc/apt/trusted.gpg.d/packages.microsoft.asc
+    repo: deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/packages.microsoft.asc] https://packages.microsoft.com/repos/code stable main
 
 # Upgrade all packages
 upgrade_packages: true
@@ -47,12 +45,11 @@ install_packages:
   - python3-pip
   - tmux
   - pv
+  - zsh
+  - jq
   - containerd.io
   - docker-ce-cli
   - docker-ce
-  - zsh
-  - kubectl
-  - jq
   - code
 
 # Packages installed with Pip
@@ -65,6 +62,7 @@ pip_packages:
 
 # Packages installed with brew
 brew_packages:
+  - kubectl
   - yq
   - kustomize
   - helm

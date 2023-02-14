@@ -1,21 +1,29 @@
 ---
-- name: Install gnupg
-  package:
-    name: gnupg
-    state: present
+- name: Install dependencies (apt)
   become: true
-  when: (apt_repositories | length) > 0
+  ansible.builtin.apt:
+    name:
+      - ca-certificates
+      - apt-transport-https
+      - gconf2
+      - libasound2
+      - libgtk2.0-0
+      - libxss1
+      - libxcb-dri3-0
+      - libdrm2
+      - libgbm1
+      - libxshmfence1
+    state: present
 
 - name: Add GPG keys
-  apt_key:
+  ansible.builtin.get_url:
     url: "{{ item.gpg_url }}"
-    state: "{{ item.stat | default('present')}}"
-    keyring: "{{ item.keyring | default(omit) }}"
+    dest: "{{ item.dest }}"
   loop: "{{ apt_repositories }}"
   become: true
 
 - name: Add APT repository
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: "{{ item.repo }}"
     state: present
   loop: "{{ apt_repositories }}"
@@ -44,7 +52,35 @@
     executable: "{{ item.executable | default(omit) }}"
   loop: "{{ pip_packages }}"
 
-- import_tasks: tasks/install-brew.yaml
+# - import_tasks: tasks/install-brew.yaml
+#   when: configure_homebrew
+- name: Install Homebrew
+  block:
+    - name: Check if Homebrew is installed
+      stat:
+        path: /home/linuxbrew/.linuxbrew/bin/brew
+      register: homebrew
+
+    - name: Install Homebrew
+      block:
+        - name: Ensure sudo, git, and curl is installed
+          package:
+            name:
+              - sudo
+              - git
+              - curl
+            state: present
+          become: true
+
+        - name: Get Homebrew
+          get_url:
+            url: https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
+            dest: /tmp/install-brew.sh
+            mode: 0777
+
+        - name: Install Homebrew
+          command: /tmp/install-brew.sh
+      when: not homebrew.stat.exists
   when: configure_homebrew
 
 - name: Install Brew packages

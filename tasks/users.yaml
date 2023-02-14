@@ -1,12 +1,12 @@
 ---
 - name: Ensure group "{{ user_group }}" exists
-  group:
+  ansible.builtin.group:
     name: "{{ user_group }}"
     state: present
   become: true
 
 - name: Ensure the user "{{ user_name }}" belongs to "{{ user_group }}"
-  user:
+  ansible.builtin.user:
     name: "{{ user_name }}"
     shell: /bin/bash
     group: "{{ user_group }}"
