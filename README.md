@@ -5,7 +5,7 @@ My dotfile configuration
 ## Installation
 
 ```bash
-apt update && apt install git
+sudo apt update && sudo apt install git python3-pip
 ssh-keygen -t ed25519
 ```
 
@@ -17,7 +17,7 @@ Install the dotfiles using Ansible, with:
 git clone git@github.com:AndersBennedsgaard/dotfiles.git
 cd dotfiles
 
-pip install ansible
+pip install --user ansible
 
 ansible-galaxy install -r requirements.yaml
 ansible-playbook main.yaml -K

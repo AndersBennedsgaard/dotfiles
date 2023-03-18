@@ -13,7 +13,7 @@ apt_repositories:
   - gpg_url: https://download.docker.com/linux/ubuntu/gpg
     dest: /etc/apt/trusted.gpg.d/docker-archive-keyring.asc
     # impish stable repo for normal Ubuntu. focal stable for Vagrant
-    repo: deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/docker-archive-keyring.asc] https://download.docker.com/linux/ubuntu focal stable
+    repo: deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/docker-archive-keyring.asc] https://download.docker.com/linux/ubuntu impish stable
   - gpg_url: https://packages.microsoft.com/keys/microsoft.asc
     dest: /etc/apt/trusted.gpg.d/packages.microsoft.asc
     repo: deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/packages.microsoft.asc] https://packages.microsoft.com/repos/code stable main
@@ -44,7 +44,7 @@ install_packages:
   - neovim
   - python3-pip
   - tmux
-  - pv
+  # - pv
   - zsh
   - jq
   - containerd.io
@@ -58,27 +58,27 @@ pip_packages:
   - ansible
   - flake8
   - virtualenv
-  - ansible-lint
+  # - ansible-lint
 
 # Packages installed with brew
 brew_packages:
-  - kubectl
+  # - kubectl
   - yq
-  - kustomize
-  - helm
-  - kind
-  - derailed/k9s/k9s
-  - fluxcd/tap/flux
+  # - kustomize
+  # - helm
+  # - kind
+  # - derailed/k9s/k9s
+  # - fluxcd/tap/flux
 
 install_ohmyzsh: true
 install_go: true
 
 get_files:
-  - url: https://golang.org/dl/go1.17.7.linux-amd64.tar.gz
-    location: ~/go.tar.gz
-    unarchive: true
-    unarchiveLocation: /usr/local
-    check_command: go version
+  # - url: https://golang.org/dl/go1.17.7.linux-amd64.tar.gz
+  #   location: ~/go.tar.gz
+  #   unarchive: true
+  #   unarchiveLocation: /usr/local
+  #   check_command: go version
 
 # Location of files either in an array format, or in 'name', 'dest' format.
 # Files in array format, are copied to "~/" with the same name.

@@ -92,6 +92,6 @@
   become_user: "{{ user_name }}"
   become: true
 
-- name: Install go
-  include_tasks: tasks/install-go.yaml
-  when: install_go
+# - name: Install go
+#   include_tasks: tasks/install-go.yaml
+#   when: install_go

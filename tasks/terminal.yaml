@@ -8,6 +8,7 @@
   loop: "{{ git_configs }}"
 
 - name: "Change shell"
+  become: true
   user:
     name: "{{ user_name }}"
     shell: "{{ user_shell }}"
