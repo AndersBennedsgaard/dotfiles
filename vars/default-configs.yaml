@@ -86,8 +86,9 @@ get_files:
 dotfiles:
   - dotfiles/.vimrc
   - dotfiles/.bashrc
-  - dotfiles/.bash_aliases
   - dotfiles/.bash_custom
+  - dotfiles/.zshrc
+  - dotfiles/.aliases
   - dotfiles/.tmux.conf
   - name: dotfiles/.nvim.init.vim
     dest: ~/.config/nvim/init.vim
