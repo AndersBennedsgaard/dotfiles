@@ -5,13 +5,13 @@ My dotfile configuration
 ## Installation
 
 ```bash
-sudo apt update && sudo apt install git python3-pip
+sudo apt update && sudo apt -y install git python3-pip
 ssh-keygen -t ed25519
 ```
 
 Log into Github.com, and add `~/.ssh/id_ed25519.pub` to [keys](https://github.com/settings/keys).
 
-Install the dotfiles using Ansible, with:
+Start a new terminal (to load the SSH keys into `git`), and install the dotfiles using Ansible, with:
 
 ```bash
 git clone git@github.com:AndersBennedsgaard/dotfiles.git
@@ -19,9 +19,17 @@ cd dotfiles
 
 pip install --user ansible
 
+# $HOME/.local/bin is most likely not in $PATH
+export PATH="$PATH:$HOME/.local/bin"
+
 ansible-galaxy install -r requirements.yaml
 ansible-playbook main.yaml -K
 ```
+
+Sometimes installation of `code` may fail because of duplicate files in `/etc/apt/sources.list.d/`.
+If this happens, delete `packages_microsoft_com_repos_code.list` and `vscode.list` in this folder.
+
+When changing the shell of a user (i.e. to `/bin/zsh`) you need to log out and in again, for this to take effect.
 
 ## Development
 
