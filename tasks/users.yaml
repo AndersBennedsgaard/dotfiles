@@ -1,0 +1,14 @@
+---
+- name: Ensure group "{{ user_group }}" exists
+  ansible.builtin.group:
+    name: "{{ user_group }}"
+    state: present
+  become: true
+
+- name: Ensure the user "{{ user_name }}" belongs to "{{ user_group }}"
+  ansible.builtin.user:
+    name: "{{ user_name }}"
+    shell: /bin/bash # FIXME: always reports "changed", as the shell is later changed to zsh
+    group: "{{ user_group }}"
+    groups: "{{ user_group }}"
+  become: true

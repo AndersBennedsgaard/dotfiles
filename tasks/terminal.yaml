@@ -1,0 +1,18 @@
+---
+- name: Configure Git
+  community.general.git_config:
+    name: "{{ item.name }}"
+    scope: "{{ item.scope | default('global') }}"
+    repo: '{{ item.repo | default(''""'') }}'
+    value: "{{ item.value }}"
+  loop: "{{ git_configs }}"
+
+- name: "Change shell"
+  become: true
+  user:
+    name: "{{ user_name }}"
+    shell: "{{ user_shell }}"
+
+- name: Install oh-my-zsh
+  include_tasks: tasks/install-ohmyzsh.yaml
+  when: install_ohmyzsh

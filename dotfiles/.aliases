@@ -1,0 +1,23 @@
+#!/bin/bash
+
+alias disp="display"
+alias la='ls -AF'
+alias py="python3"
+
+alias conflicts="git diff --name-only --diff-filter=U"
+alias log='git log --all --decorate --oneline --graph'
+
+alias mktar='tar -cvf'
+alias untar='tar -xvf'
+
+alias nv='nvim'
+
+alias k='kubectl'
+# To enable shell completion for the alias
+complete -F __start_kubectl k
+alias wpo='watch kubectl get pods'
+alias wf='watch flux get all -A'
+alias fsync='flux reconcile source git flux-system'
+alias kga='kubectl api-resources --namespaced --verbs=list -o name | xargs -n 1 kubectl get --ignore-not-found --show-kind'
+alias fga='flux get all -A'
+

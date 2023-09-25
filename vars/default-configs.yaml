@@ -1,0 +1,105 @@
+---
+configure_packages: true
+configure_dotfiles: true
+configure_terminal: true
+
+configure_homebrew: true
+
+user_name: anders
+user_group: sudo
+user_shell: /bin/zsh
+
+apt_repositories:
+  - gpg_url: https://download.docker.com/linux/ubuntu/gpg
+    dest: /etc/apt/trusted.gpg.d/docker-archive-keyring.asc
+    # impish stable repo for normal Ubuntu. focal stable for Vagrant
+    repo: deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/docker-archive-keyring.asc] https://download.docker.com/linux/ubuntu impish stable
+  - gpg_url: https://packages.microsoft.com/keys/microsoft.asc
+    dest: /etc/apt/trusted.gpg.d/packages.microsoft.asc
+    repo: deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/packages.microsoft.asc] https://packages.microsoft.com/repos/code stable main
+
+# Upgrade all packages
+upgrade_packages: true
+
+# Packages installed by the package module.
+# In 'name' and 'state' format, otherwise use the object as default name
+install_packages:
+  - sudo
+  - git
+  - gnupg
+  - apt-transport-https
+  - ca-certificates
+  - gconf2
+  - libasound2
+  - libgtk2.0-0
+  - libxss1
+  - libxcb-dri3-0
+  - libdrm2
+  - libgbm1
+  - libxshmfence1
+  - lsb-release
+  - curl
+  - wget
+  - vim
+  - neovim
+  - python3-pip
+  - tmux
+  # - pv
+  - zsh
+  - jq
+  - containerd.io
+  - docker-ce-cli
+  - docker-ce
+  - code
+
+# Packages installed with Pip
+# Either in 'name', 'state', 'version' format, or use the object as default name
+pip_packages:
+  - ansible
+  - flake8
+  - virtualenv
+  # - ansible-lint
+
+# Packages installed with brew
+brew_packages:
+  # - kubectl
+  - yq
+  # - kustomize
+  # - helm
+  # - kind
+  # - derailed/k9s/k9s
+  # - fluxcd/tap/flux
+
+install_ohmyzsh: true
+install_go: true
+
+get_files:
+  # - url: https://golang.org/dl/go1.17.7.linux-amd64.tar.gz
+  #   location: ~/go.tar.gz
+  #   unarchive: true
+  #   unarchiveLocation: /usr/local
+  #   check_command: go version
+
+# Location of files either in an array format, or in 'name', 'dest' format.
+# Files in array format, are copied to "~/" with the same name.
+# If the files are located in a subdirectory on the source, only the name of the file is used
+dotfiles:
+  - dotfiles/.vimrc
+  - dotfiles/.bashrc
+  - dotfiles/.bash_custom
+  - dotfiles/.zshrc
+  - dotfiles/.aliases
+  - dotfiles/.tmux.conf
+  - name: dotfiles/.nvim.init.vim
+    dest: ~/.config/nvim/init.vim
+
+# Configure Git
+git_configs:
+  - name: core.editor
+    value: vim
+  - name: color.ui
+    value: auto
+  - name: user.email
+    value: abbennedsgaard@gmail.com
+  - name: user.name
+    value: AndersBennedsgaard

@@ -3,3 +3,5 @@
 *.swp
 .tmux/resurrect/
 .tmux/sidebar/
+.vscode/
+.vagrant/

@@ -1,0 +1,24 @@
+---
+- name: Get files
+  get_url:
+    url: "https://golang.org/dl/go1.17.7.linux-amd64.tar.gz"
+    dest: "/tmp/go.tar.gz"
+    mode: 0644
+
+- name: Unarchive objects
+  unarchive:
+    src: "/tmp/go.tar.gz"
+    dest: /usr/local
+
+- name: Test easier command verification
+  shell: command -v go > /dev/null
+  changed_when: false
+
+- name: Ensure go exists
+  shell: command -v go >/dev/null 2>&1
+  register: go_exists
+
+- name: Fail if the go command does not exist
+  fail:
+    msg: "go does not exist"
+  when: "not go_exists.rc"
