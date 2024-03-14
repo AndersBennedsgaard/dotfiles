@@ -174,6 +174,10 @@ if [ -d "$HOME/JetBrains/GoLand-2022.1/bin" ]; then
     export PATH="$HOME/JetBrains/GoLand-2022.1/bin:$PATH"
 fi
 
+if command -v direnv &> /dev/null; then
+    eval "$(direnv hook zsh)"
+fi
+
 [ -f "$HOME/.pyenv/bin/pyenv" ] && export PATH="$HOME/.pyenv/bin:$PATH"
 
 # Use Docker BuildKit:
@@ -206,4 +210,3 @@ export NVM_DIR="$HOME/nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 autoload -U +X bashcompinit && bashcompinit
-
