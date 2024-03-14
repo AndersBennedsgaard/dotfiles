@@ -8,7 +8,22 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="robbyrussell"
+# ZSH_THEME="robbyrussell"
+ZSH_THEME="random"
+ZSH_THEME_RANDOM_IGNORED=(
+    "eastwood" "agnoster" "humza" "michelebologna" "wuffers" "example"
+    "jonathan" "amuse" "apple" "simonoff" "mira" "obraun" "lambda"
+    "blinks" "intheloop" "frontcube" "funky" "rixius" "smt" "re5et"
+    "frisk" "af-magic" "kiwi" "peepcode" "skaro" "darkblood" "mortalscumbag"
+    "refined" "kardan" "pygmalion" "sammy" "garyblessington"
+    "pygmalion-virtualenv" "trapd00r" "avit" "tonotdo" "emotty"
+    "bureau" "kolo" "philips" "evan" "candy-kingdom" "half-life"
+    "sporty_256" "awesomepanda" "rgm" "arrow" "gentoo" "bira" "Soliah"
+    "junkfood" "flazz" "3den" "sorin" "dpoggi" "kennethreitz" "juanghurtado"
+    "candy" "sunrise" "imajes" "josh" "superjarin" "dstufft" "cypher"
+    "lukerandall" "terminalparty" "risto" "sunaku" "macovsky-ruby"
+    "linuxonly"
+)
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -26,7 +41,7 @@ ZSH_THEME="robbyrussell"
 # Uncomment one of the following lines to change the auto-update behavior
 # zstyle ':omz:update' mode disabled  # disable automatic updates
 # zstyle ':omz:update' mode auto      # update automatically without asking
-# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
+zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 
 # Uncomment the following line to change how often to auto-update (in days).
 # zstyle ':omz:update' frequency 13
@@ -47,7 +62,7 @@ ZSH_THEME="robbyrussell"
 # You can also set it to another string to have that shown instead of the default red dots.
 # e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
 # Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
-# COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -60,7 +75,7 @@ ZSH_THEME="robbyrussell"
 # "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 # or set a custom format using the strftime function format specifications,
 # see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
+HIST_STAMPS="yyyy-mm-dd"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
@@ -71,9 +86,22 @@ ZSH_THEME="robbyrussell"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-    git
-    zsh-autosuggestions
+  git
+  kube-ps1
+  docker
+  docker-compose
+  direnv
+  aws
+  colored-man-pages
+  golang
+  zsh-autosuggestions
 )
+
+# Normally this should be placed below, but for autocompletion, run this before sourcing oh-my-zsh.sh
+if [ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+    FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+fi
 
 source $ZSH/oh-my-zsh.sh
 
@@ -103,15 +131,82 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-source $HOME/.aliases
-export PATH="$PATH:$HOME/.local/bin"
-[ -f "/home/linuxbrew/.linuxbrew/bin/brew" ] && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+# source .zsh_aliases if it exists
+[ -f "$HOME/.aliases" ] && source "$HOME/.aliases"
 
-if command -v go &> /dev/null; then
-    export PATH="$(go env GOPATH)/bin:$PATH"
+if command -v kubectl &> /dev/null; then
+    source <(kubectl completion zsh)
+    export KUBECONFIG=$HOME/.kube/config
+fi
+
+if command -v helm &> /dev/null; then
+    source <(helm completion zsh)
+fi
+
+if command -v flux &> /dev/null; then
+    source <(flux completion zsh)
+fi
+
+if command -v k9s &> /dev/null; then
+    export XDG_CONFIG_HOME="$HOME"
+fi
+
+if command -v gke-gcloud-auth-plugin &> /dev/null; then
+    export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+fi
+
+export VISUAL=vim
+export EDITOR="$VISUAL"
+
+if [ -d "/opt/mssql-tools/bin/" ]; then
+    export PATH="/opt/mssql-tools/bin/:$PATH"
+fi
+
+if [ -d "$HOME/.krew/" ]; then
+    export PATH="$HOME/.krew/bin:$PATH"
+fi
+
+if [ -d "$HOME/go/bin/" ]; then
+    export PATH="$HOME/go/bin:$PATH"
+fi
+
+if [ -d "$HOME/JetBrains/GoLand-2022.1/bin" ]; then
+    export PATH="$HOME/JetBrains/GoLand-2022.1/bin:$PATH"
 fi
 
 if command -v direnv &> /dev/null; then
     eval "$(direnv hook zsh)"
 fi
 
+[ -f "$HOME/.pyenv/bin/pyenv" ] && export PATH="$HOME/.pyenv/bin:$PATH"
+
+# Use Docker BuildKit:
+export DOCKER_BUILDKIT=1
+export PROMPT='$(kube_ps1)'$PROMPT
+
+function ignore_default_namespace () {
+    if [ "$1" != "default" ]; then
+        echo "$1"
+    fi
+}
+
+function truncate_long_contexts () {
+    # if the context is longer than 15 characters, remove those and replace with '...'
+    echo "$1" | sed 's/\(.\{15\}\).*/\1.../'
+}
+
+export KUBE_PS1_NAMESPACE_FUNCTION=ignore_default_namespace
+export KUBE_PS1_CLUSTER_FUNCTION=truncate_long_contexts
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f "$HOME/google-cloud-sdk/path.zsh.inc ]; then . "$HOME/google-cloud-sdk/path.zsh.inc"; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/google-cloud-sdk/completion.zsh.inc"; fi
+
+
+export NVM_DIR="$HOME/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+autoload -U +X bashcompinit && bashcompinit
