@@ -111,3 +111,7 @@ if command -v go &> /dev/null; then
     export PATH="$(go env GOPATH)/bin:$PATH"
 fi
 
+if command -v direnv &> /dev/null; then
+    eval "$(direnv hook zsh)"
+fi
+
