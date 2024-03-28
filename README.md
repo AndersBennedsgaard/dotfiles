@@ -5,7 +5,8 @@ My dotfile configuration
 ## Installation
 
 ```bash
-sudo apt update && sudo apt -y install git python3-pip
+sudo apt update
+sudo apt -y install git python3-pip
 ssh-keygen -t ed25519
 ```
 

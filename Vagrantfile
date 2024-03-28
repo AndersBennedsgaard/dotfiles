@@ -4,7 +4,7 @@ Vagrant.configure("2") do |config|
   # For a complete reference, please see the online documentation at
   # https://docs.vagrantup.com.
 
-  config.vm.box = "generic/ubuntu2004"
+  config.vm.box = "generic/ubuntu2204"
 
   # Disable automatic box update checking
   # config.vm.box_check_update = false
@@ -30,8 +30,13 @@ Vagrant.configure("2") do |config|
     # vb.memory = "1024"
   end
 
+  # set danish keyboard layout
+  config.vm.provision "shell",
+    inline: 'sed -i \'s/XKBLAYOUT="\w*"/XKBLAYOUT="dk"/\' /etc/default/keyboard'
+
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "main.yaml"
     ansible.ask_become_pass = true
+    ansible.compatibility_mode = "2.0"
   end
 end
