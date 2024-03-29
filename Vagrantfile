@@ -1,3 +1,6 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
 # The "2" in Vagrant.configure configures the configuration version
 Vagrant.configure("2") do |config|
   # The most common configuration options are documented and commented below.
@@ -31,8 +34,10 @@ Vagrant.configure("2") do |config|
   end
 
   # set danish keyboard layout
-  config.vm.provision "shell",
-    inline: 'sed -i \'s/XKBLAYOUT="\w*"/XKBLAYOUT="dk"/\' /etc/default/keyboard'
+  config.vm.provision "shell" do |shell|
+    shell.inline = 'sed -i \'s/XKBLAYOUT="\w*"/XKBLAYOUT="dk"/\' /etc/default/keyboard'
+    shell.reboot = true
+  end
 
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "main.yaml"
