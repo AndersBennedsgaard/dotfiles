@@ -92,16 +92,18 @@
         - name: Install Homebrew
           become: true
           become_user: "{{ user_name }}"
-          ansible.builtin.shell: NONINTERACTIVE=1 /tmp/install-brew.sh
+          ansible.builtin.command: /tmp/install-brew.sh
           args:
             creates: /home/linuxbrew/.linuxbrew/bin/brew
+          environment:
+            NONINTERACTIVE: "1"
 
         - name: Set owner of Homebrew
           become: true
           ansible.builtin.file:
             path: /home/linuxbrew/.linuxbrew/
             state: directory
-            recurse: yes
+            recurse: true
             owner: "{{ user_name }}"
             group: "{{ user_group }}"
 

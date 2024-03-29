@@ -16,11 +16,13 @@
   become: true
 
 - name: Run installation
-  ansible.builtin.shell: CHSH="no" /tmp/ohmyzsh-install.sh
+  ansible.builtin.command: /tmp/ohmyzsh-install.sh
   when: not ohmyzsh_installed.stat.exists
   changed_when: true
   become_user: "{{ user_name }}"
   become: true
+  environment:
+    CHSH: "no"
 
 - name: Ensure ~/.oh-my-zsh/ exist
   ansible.builtin.stat:
