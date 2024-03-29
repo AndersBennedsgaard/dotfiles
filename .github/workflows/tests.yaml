@@ -1,0 +1,39 @@
+---
+name: Tests
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  integration:
+    name: Integration
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the codebase.
+        uses: actions/checkout@v2
+
+      - name: Install test dependencies.
+        run: sudo pip3 install ansible
+
+      - name: Test the playbook's syntax.
+        run: ansible-playbook main.yaml --syntax-check
+
+      - name: Test the playbook.
+        env:
+          ANSIBLE_FORCE_COLOR: "1"
+        run: ansible-playbook main.yaml
+
+      - name: Idempotence check.
+        env:
+          ANSIBLE_FORCE_COLOR: "1"
+        run: |
+          idempotence=$(mktemp)
+          ansible-playbook main.yaml | tee -a ${idempotence}
+          if tail ${idempotence} | grep -q 'changed=0.*failed=0'; then
+              echo 'Idempotence test: pass'
+          else
+              echo 'Idempotence test: fail'
+              exit 1
+          fi
