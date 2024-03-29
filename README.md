@@ -27,9 +27,6 @@ ansible-galaxy install -r requirements.yaml
 ansible-playbook main.yaml -K
 ```
 
-Sometimes installation of `code` may fail because of duplicate files in `/etc/apt/sources.list.d/`.
-If this happens, delete `packages_microsoft_com_repos_code.list` and `vscode.list` in this folder.
-
 When changing the shell of a user (i.e. to `/bin/zsh`) you need to log out and in again, for this to take effect.
 
 ## Development
@@ -38,7 +35,7 @@ Testing can either be done with Vagrant (recommended) or Docker.
 
 ### Vagrant
 
-A Vagrantfile is located at the root of the project, which runs a `generic/ubuntu2004` box with the Ansible playbook as the provisioner.
+A Vagrantfile is located at the root of the project, which runs a `generic/ubuntu2204` box with the Ansible playbook as the provisioner.
 Boot up the VM and run the playbook with:
 
 ```bash
