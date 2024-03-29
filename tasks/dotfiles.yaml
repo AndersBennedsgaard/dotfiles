@@ -1,14 +1,16 @@
 ---
 - name: Ensure folders exist
-  file:
+  ansible.builtin.file:
     path: "{{ item.dest | default('~/') | dirname }}"
     state: directory
+    mode: '0755'
   become: false
   loop: "{{ dotfiles }}"
 
 - name: Copy items to its destination
-  copy:
+  ansible.builtin.copy:
     src: "{{ item.name | default(item) }}"
     dest: "{{ item.dest | default('~/' + (item.name | default(item) | basename)) }}"
+    mode: preserve
   become: false
   loop: "{{ dotfiles }}"

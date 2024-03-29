@@ -9,10 +9,10 @@
 
 - name: "Change shell"
   become: true
-  user:
+  ansible.builtin.user:
     name: "{{ user_name }}"
     shell: "{{ user_shell }}"
 
 - name: Install oh-my-zsh
-  include_tasks: tasks/install-ohmyzsh.yaml
+  ansible.builtin.include_tasks: tasks/install-ohmyzsh.yaml
   when: install_ohmyzsh

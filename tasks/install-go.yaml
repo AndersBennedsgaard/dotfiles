@@ -1,24 +1,31 @@
 ---
+- name: Create /tmp
+  ansible.builtin.file:
+    path: /tmp
+    state: directory
+    mode: '0755'
+
 - name: Get files
-  get_url:
+  ansible.builtin.get_url:
     url: "https://golang.org/dl/go1.17.7.linux-amd64.tar.gz"
     dest: "/tmp/go.tar.gz"
-    mode: 0644
+    mode: '0600'
 
 - name: Unarchive objects
-  unarchive:
+  ansible.builtin.unarchive:
     src: "/tmp/go.tar.gz"
     dest: /usr/local
 
 - name: Test easier command verification
-  shell: command -v go > /dev/null
+  ansible.builtin.shell: command -v go > /dev/null
   changed_when: false
 
 - name: Ensure go exists
-  shell: command -v go >/dev/null 2>&1
+  ansible.builtin.shell: command -v go >/dev/null 2>&1
   register: go_exists
+  changed_when: false
 
 - name: Fail if the go command does not exist
-  fail:
+  ansible.builtin.fail:
     msg: "go does not exist"
   when: "not go_exists.rc"

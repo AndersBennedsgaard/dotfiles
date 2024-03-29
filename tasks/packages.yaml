@@ -2,6 +2,7 @@
 - name: Install dependencies (apt)
   become: true
   ansible.builtin.apt:
+    update_cache: true
     name:
       - ca-certificates
       - apt-transport-https
@@ -13,12 +14,14 @@
       - libdrm2
       - libgbm1
       - libxshmfence1
+      - acl
     state: present
 
 - name: Add GPG keys
   ansible.builtin.get_url:
     url: "{{ item.gpg_url }}"
     dest: "{{ item.dest }}"
+    mode: "0644"
   loop: "{{ apt_repositories }}"
   become: true
 
@@ -30,22 +33,28 @@
   become: true
 
 - name: Upgrade all apt packages
-  apt:
+  when: upgrade_packages
+  become: true
+  ansible.builtin.apt:
     autoclean: true
     update_cache: true
     upgrade: true
-  when: upgrade_packages
-  become: true
 
 - name: Install packages
-  package:
+  become: true
+  loop: "{{ install_packages }}"
+  ansible.builtin.package:
     name: "{{ item.name | default(item) }}"
     state: "{{ item.state | default('present') }}"
-  loop: "{{ install_packages }}"
-  become: true
 
-- name: install global Pip packages
-  pip:
+- name: Install .deb packages
+  become: true
+  loop: "{{ deb_packages }}"
+  ansible.builtin.apt:
+    deb: "{{ item.url }}"
+
+- name: Install global Pip packages
+  ansible.builtin.pip:
     name: "{{ item.name | default(item) }}"
     state: "{{ item.state | default('present') }}"
     version: "{{ item.version | default(omit) }}"
@@ -55,33 +64,46 @@
 # - import_tasks: tasks/install-brew.yaml
 #   when: configure_homebrew
 - name: Install Homebrew
+  when: configure_homebrew
   block:
     - name: Check if Homebrew is installed
-      stat:
+      ansible.builtin.stat:
         path: /home/linuxbrew/.linuxbrew/bin/brew
       register: homebrew
 
     - name: Install Homebrew
+      when: not homebrew.stat.exists
       block:
         - name: Ensure sudo, git, and curl is installed
-          package:
+          become: true
+          ansible.builtin.package:
             name:
               - sudo
               - git
               - curl
             state: present
-          become: true
 
         - name: Get Homebrew
-          get_url:
+          ansible.builtin.get_url:
             url: https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
             dest: /tmp/install-brew.sh
-            mode: 0777
+            mode: "0777"
 
         - name: Install Homebrew
-          command: /tmp/install-brew.sh
-      when: not homebrew.stat.exists
-  when: configure_homebrew
+          become: true
+          become_user: "{{ user_name }}"
+          ansible.builtin.shell: NONINTERACTIVE=1 /tmp/install-brew.sh
+          args:
+            creates: /home/linuxbrew/.linuxbrew/bin/brew
+
+        - name: Set owner of Homebrew
+          become: true
+          ansible.builtin.file:
+            path: /home/linuxbrew/.linuxbrew/
+            state: directory
+            recurse: yes
+            owner: "{{ user_name }}"
+            group: "{{ user_group }}"
 
 - name: Install Brew packages
   community.general.homebrew:

@@ -10,11 +10,15 @@
   #   - role: gantsign.visual-studio-code
 
   tasks:
-    - import_tasks: tasks/users.yaml
+    - name: Install users
+      ansible.builtin.import_tasks: tasks/users.yaml
       when: user_name is defined
-    - import_tasks: tasks/packages.yaml
+    - name: Install packages
+      ansible.builtin.import_tasks: tasks/packages.yaml
       when: configure_packages
-    - import_tasks: tasks/terminal.yaml
+    - name: Set up terminal
+      ansible.builtin.import_tasks: tasks/terminal.yaml
       when: configure_terminal
-    - import_tasks: tasks/dotfiles.yaml
+    - name: Set up dotfiles
+      ansible.builtin.import_tasks: tasks/dotfiles.yaml
       when: configure_dotfiles
