@@ -21,6 +21,7 @@ require("lazy").setup({
   { 'folke/neodev.nvim',              opts = {} },
   { 'numToStr/Comment.nvim',          opts = {} },
   { 'stevearc/conform.nvim' }, -- Autoformat
+  { 'github/copilot.vim' },
   {
     'VonHeikemen/lsp-zero.nvim',
     branch = 'v3.x',

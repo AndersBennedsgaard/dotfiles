@@ -52,6 +52,7 @@ pip_packages:
   - flake8
   - black
   - virtualenv
+  - ruff
 
 # Packages installed with brew
 brew_packages:
