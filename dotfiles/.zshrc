@@ -94,7 +94,6 @@ plugins=(
   aws
   colored-man-pages
   golang
-  zsh-autosuggestions
 )
 
 # Normally this should be placed below, but for autocompletion, run this before sourcing oh-my-zsh.sh
@@ -199,11 +198,14 @@ export KUBE_PS1_NAMESPACE_FUNCTION=ignore_default_namespace
 export KUBE_PS1_CLUSTER_FUNCTION=truncate_long_contexts
 
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f "$HOME/google-cloud-sdk/path.zsh.inc ]; then . "$HOME/google-cloud-sdk/path.zsh.inc"; fi
+if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/google-cloud-sdk/path.zsh.inc"; fi
 
 # The next line enables shell command completion for gcloud.
 if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/google-cloud-sdk/completion.zsh.inc"; fi
 
+if [ -f "/home/linuxbrew/.linuxbrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
+    source "/home/linuxbrew/.linuxbrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+fi
 
 export NVM_DIR="$HOME/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm

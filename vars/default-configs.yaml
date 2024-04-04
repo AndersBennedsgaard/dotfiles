@@ -49,13 +49,31 @@ install_packages:
 # Packages installed with Pip
 # Either in 'name', 'state', 'version' format, or use the object as default name
 pip_packages:
-  - ansible
   - flake8
+  - black
   - virtualenv
 
 # Packages installed with brew
 brew_packages:
+  - zsh-autosuggestions
   - yq
+  - kubectl
+  - kustomize
+  - helm
+  - kind
+  - derailed/k9s/k9s
+  - fluxcd/tap/flux
+  - direnv
+  - int128/kubelogin/kubelogin
+  - gh
+  - tree
+  - act
+
+# Packages installed with flatpak
+flatpak_packages: # TODO: Add flatpak support
+  - chat.rocket.RocketChat
+  - com.slack.Slack
+  - us.zoom.Zoom
 
 get_files: []
 # - url: https://golang.org/dl/go1.17.7.linux-amd64.tar.gz
@@ -80,10 +98,10 @@ dotfiles:
 # Configure Git
 git_configs:
   - name: core.editor
-    value: vim
+    value: nvim
   - name: color.ui
     value: auto
   - name: user.email
     value: abbennedsgaard@gmail.com
   - name: user.name
-    value: AndersBennedsgaard
+    value: Anders Bennedsgaard
