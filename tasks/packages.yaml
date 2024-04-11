@@ -107,15 +107,22 @@
             owner: "{{ user_name }}"
             group: "{{ user_group }}"
 
+- name: Tap Brew packages
+  community.general.homebrew_tap:
+    path: "/usr/local/bin:/opt/homebrew/bin:/home/linuxbrew/.linuxbrew/bin"
+    name: "{{ item.tap }}"
+    state: 'present'
+  loop: "{{ brew_packages }}"
+  when: item.tap is defined
+  become_user: "{{ user_name }}"
+  become: true
+
 - name: Install Brew packages
   community.general.homebrew:
     path: "/usr/local/bin:/opt/homebrew/bin:/home/linuxbrew/.linuxbrew/bin"
     name: "{{ item.name | default(item) }}"
-    state: "{{ item.state | default('present') }}"
+    state: 'present'
   loop: "{{ brew_packages }}"
   become_user: "{{ user_name }}"
   become: true
 
-# - name: Install go
-#   include_tasks: tasks/install-go.yaml
-#   when: install_go

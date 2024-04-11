@@ -20,7 +20,6 @@ apt_repositories:
     repo: deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/docker-archive-keyring.asc] https://download.docker.com/linux/ubuntu impish stable
 
 install_ohmyzsh: true
-install_go: true
 
 deb_packages:
   - url: "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"
@@ -37,7 +36,6 @@ install_packages:
   - curl
   - wget
   - vim
-  - neovim
   - python3-pip
   - tmux
   - zsh
@@ -57,15 +55,21 @@ pip_packages:
 # Packages installed with brew
 brew_packages:
   - zsh-autosuggestions
+  - go
+  - node # required by a lot of tools
+  - neovim
   - yq
   - kubectl
   - kustomize
   - helm
   - kind
-  - derailed/k9s/k9s
-  - fluxcd/tap/flux
+  - tap: derailed/k9s
+    name: derailed/k9s/k9s
+  - tap: fluxcd/tap
+    name: fluxcd/tap/flux
   - direnv
-  - int128/kubelogin/kubelogin
+  - tap: int128/kubelogin
+    name: int128/kubelogin/kubelogin
   - gh
   - tree
   - act
