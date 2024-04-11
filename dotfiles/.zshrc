@@ -147,7 +147,7 @@ if command -v flux &> /dev/null; then
 fi
 
 if command -v k9s &> /dev/null; then
-    export XDG_CONFIG_HOME="$HOME"
+    export XDG_CONFIG_HOME="$HOME/.config"
 fi
 
 if command -v gke-gcloud-auth-plugin &> /dev/null; then
