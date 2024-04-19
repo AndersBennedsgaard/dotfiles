@@ -73,6 +73,7 @@ brew_packages:
   - gh
   - tree
   - act
+  - shellcheck # for bash language server
 
 # Packages installed with flatpak
 flatpak_packages: # TODO: Add flatpak support
