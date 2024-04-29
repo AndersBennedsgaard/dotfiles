@@ -40,4 +40,5 @@ require("lazy").setup({
   { 'hrsh7th/cmp-path' },
   { 'hrsh7th/cmp-buffer' },
   { 'RRethy/vim-illuminate' }, -- Highlight references
+  { 'towolf/vim-helm',      ft = 'helm' },
 }, {})

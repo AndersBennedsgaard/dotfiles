@@ -3,7 +3,7 @@ local lsp_zero = require("lsp-zero")
 -- installation of language servers
 require('mason').setup({})
 require('mason-lspconfig').setup({
-    ensure_installed = { 'lua_ls', 'gopls', 'bashls', 'pyright', 'yamlls', 'marksman' },
+    ensure_installed = { 'lua_ls', 'gopls', 'bashls', 'pyright', 'yamlls', 'marksman', 'helm_ls' },
     automatic_installation = false,
     handlers = {
         lsp_zero.default_setup,
@@ -21,7 +21,7 @@ require('mason-lspconfig').setup({
                     end
                 end
             })
-        end
+        end,
     },
 })
 
