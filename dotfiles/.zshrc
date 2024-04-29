@@ -22,7 +22,8 @@ ZSH_THEME_RANDOM_IGNORED=(
     "junkfood" "flazz" "3den" "sorin" "dpoggi" "kennethreitz" "juanghurtado"
     "candy" "sunrise" "imajes" "josh" "superjarin" "dstufft" "cypher"
     "lukerandall" "terminalparty" "risto" "sunaku" "macovsky-ruby"
-    "linuxonly"
+    "linuxonly" "mgutz" "jbergantine" "aussiegeek" "gallois" "dogenpunk"
+    "tjkirch"
 )
 
 # Set list of themes to pick from when loading at random
@@ -94,6 +95,7 @@ plugins=(
   aws
   colored-man-pages
   golang
+  poetry
 )
 
 # Normally this should be placed below, but for autocompletion, run this before sourcing oh-my-zsh.sh
@@ -112,11 +114,11 @@ source $ZSH/oh-my-zsh.sh
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='nvim'
+fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -133,29 +135,12 @@ source $ZSH/oh-my-zsh.sh
 # source .zsh_aliases if it exists
 [ -f "$HOME/.aliases" ] && source "$HOME/.aliases"
 
-if command -v kubectl &> /dev/null; then
-    source <(kubectl completion zsh)
-    export KUBECONFIG=$HOME/.kube/config
-fi
-
-if command -v helm &> /dev/null; then
-    source <(helm completion zsh)
-fi
-
-if command -v flux &> /dev/null; then
-    source <(flux completion zsh)
-fi
-
-if command -v k9s &> /dev/null; then
-    export XDG_CONFIG_HOME="$HOME/.config"
-fi
-
-if command -v gke-gcloud-auth-plugin &> /dev/null; then
-    export USE_GKE_GCLOUD_AUTH_PLUGIN=True
-fi
-
 export VISUAL=vim
-export EDITOR="$VISUAL"
+export XDG_CONFIG_HOME="$HOME/.config"
+
+if command -v arkade &> /dev/null; then
+    export PATH="$PATH:$HOME/.arkade/bin/"
+fi
 
 if [ -d "/opt/mssql-tools/bin/" ]; then
     export PATH="/opt/mssql-tools/bin/:$PATH"
@@ -171,10 +156,6 @@ fi
 
 if [ -d "$HOME/JetBrains/GoLand-2022.1/bin" ]; then
     export PATH="$HOME/JetBrains/GoLand-2022.1/bin:$PATH"
-fi
-
-if command -v direnv &> /dev/null; then
-    eval "$(direnv hook zsh)"
 fi
 
 [ -f "$HOME/.pyenv/bin/pyenv" ] && export PATH="$HOME/.pyenv/bin:$PATH"
@@ -211,4 +192,13 @@ export NVM_DIR="$HOME/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+autoload -U compinit; compinit
+
 autoload -U +X bashcompinit && bashcompinit
+
+tf_ver="$(terraform --version --json | jq '.terraform_version' -r)"
+complete -o nospace -C "/home/linuxbrew/.linuxbrew/Cellar/terraform/$tf_ver/bin/terraform" terraform
+
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
