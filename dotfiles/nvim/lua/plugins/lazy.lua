@@ -20,7 +20,8 @@ require("lazy").setup({
   { 'nvim-treesitter/nvim-treesitter' },
   { 'folke/neodev.nvim',              opts = {} },
   { 'numToStr/Comment.nvim',          opts = {} },
-  { 'stevearc/conform.nvim' }, -- Autoformat
+  { 'stevearc/conform.nvim' },  -- Autoformat
+  { 'airblade/vim-gitgutter' }, -- Git information in the gutter
   { 'github/copilot.vim' },
   {
     'VonHeikemen/lsp-zero.nvim',
