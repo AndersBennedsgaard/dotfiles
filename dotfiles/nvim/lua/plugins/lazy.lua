@@ -12,14 +12,38 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- import plugins
-require("lazy").setup({
-  { 'tpope/vim-sleuth' }, -- detect tabstop and shiftwidth automatically
-  { 'nvim-telescope/telescope.nvim',  dependencies = { 'nvim-lua/plenary.nvim' } },
+local lazy_opts = {
+  defaults = {
+    -- Use latest stable plugin version for plugins that support SemVer
+    -- If plugins have old releases but we require newer commits, set 'version = false'
+    version = "*"
+  }
+}
+
+local plugins = {
+  {
+    'tpope/vim-sleuth',
+    version = false,
+  }, -- detect tabstop and shiftwidth automatically
+  {
+    'nvim-telescope/telescope.nvim',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      version = false,
+    },
+  },
   { 'rose-pine/neovim',               name = 'rose-pine' },
   { 'nvim-treesitter/nvim-treesitter' },
-  { 'folke/neodev.nvim',              opts = {} },
-  { 'numToStr/Comment.nvim',          opts = {} },
+  {
+    'folke/lazydev.nvim',
+    ft = "lua",
+    opts = {},
+  }, -- lsp support for NeoVim Lua
+  {
+    'numToStr/Comment.nvim',
+    version = false,
+    opts = {},
+  },
   { 'stevearc/conform.nvim' },  -- Autoformat
   { 'mfussenegger/nvim-lint' }, -- Linters
   { 'airblade/vim-gitgutter' }, -- Git information in the gutter
@@ -34,7 +58,10 @@ require("lazy").setup({
       { 'williamboman/mason-lspconfig.nvim' }, -- Optional
 
       -- Autocompletion
-      { 'hrsh7th/nvim-cmp' },     -- Required
+      {
+        'hrsh7th/nvim-cmp',
+        version = false,
+      },                          -- Required
       { 'hrsh7th/cmp-nvim-lsp' }, -- Required
       { 'L3MON4D3/LuaSnip' },     -- Required
     }
@@ -43,4 +70,7 @@ require("lazy").setup({
   { 'hrsh7th/cmp-buffer' },
   { 'RRethy/vim-illuminate' }, -- Highlight references
   { 'towolf/vim-helm',      ft = 'helm' },
-}, {})
+}
+
+-- import plugins
+require("lazy").setup(plugins, lazy_opts)
