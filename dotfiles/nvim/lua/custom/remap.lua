@@ -25,3 +25,12 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 -- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
 -- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
 -- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
+
+vim.keymap.set('n', '<M-z>', '<cmd>set wrap!<CR>', { desc = 'Toggle line wrapping' })
+
+-- Move lines up and down
+vim.keymap.set('n', '<M-j>', '<cmd>m .+1<CR>==', { desc = 'Move the current line down' })
+vim.keymap.set('n', '<M-k>', '<cmd>m .-2<CR>==', { desc = 'Move the current line up' })
+-- Move selected lines. For some reason, we must use ':' instead of '<cmd>'
+vim.keymap.set('v', '<M-j>', ":m '>+1<CR>gv=gv", { desc = 'Move the selected lines down' })
+vim.keymap.set('v', '<M-k>', ":m '<-2<CR>gv=gv", { desc = 'Move the selected lines up' })
