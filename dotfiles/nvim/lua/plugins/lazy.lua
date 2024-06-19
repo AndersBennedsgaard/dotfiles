@@ -21,6 +21,7 @@ require("lazy").setup({
   { 'folke/neodev.nvim',              opts = {} },
   { 'numToStr/Comment.nvim',          opts = {} },
   { 'stevearc/conform.nvim' },  -- Autoformat
+  { 'mfussenegger/nvim-lint' }, -- Linters
   { 'airblade/vim-gitgutter' }, -- Git information in the gutter
   { 'github/copilot.vim' },
   {
