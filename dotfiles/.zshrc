@@ -196,9 +196,13 @@ autoload -U compinit; compinit
 
 autoload -U +X bashcompinit && bashcompinit
 
-tf_ver="$(terraform --version --json | jq '.terraform_version' -r)"
-complete -o nospace -C "/home/linuxbrew/.linuxbrew/Cellar/terraform/$tf_ver/bin/terraform" terraform
+if command -v terraform &> /dev/null; then
+    tf_ver="$(terraform --version --json | jq '.terraform_version' -r)"
+    complete -o nospace -C "/home/linuxbrew/.linuxbrew/Cellar/terraform/$tf_ver/bin/terraform" terraform
+fi
 
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+if command -v pyenv &> /dev/null; then
+    export PYENV_ROOT="$HOME/.pyenv"
+    [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
+fi
