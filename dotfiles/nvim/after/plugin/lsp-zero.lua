@@ -3,7 +3,7 @@ local lsp_zero = require("lsp-zero")
 -- installation of language servers
 require('mason').setup({})
 require('mason-lspconfig').setup({
-    ensure_installed = { 'lua_ls', 'gopls', 'bashls', 'pyright', 'yamlls', 'marksman', 'helm_ls' },
+    ensure_installed = { 'lua_ls', 'gopls', 'bashls', 'yamlls', 'marksman', 'helm_ls', 'ruff' },
     automatic_installation = false,
     handlers = {
         lsp_zero.default_setup,
@@ -12,16 +12,18 @@ require('mason-lspconfig').setup({
                 single_file_support = true,
             })
         end,
-        pyright = function()
-            require('lspconfig').pyright.setup({
-                on_new_config = function(config, root_dir)
-                    local env = vim.trim(vim.fn.system('cd "' .. root_dir .. '"; poetry env info -p 2>/dev/null'))
-                    if string.len(env) > 0 then
-                        config.settings.python.pythonPath = env .. '/bin/python'
-                    end
-                end
+        ruff = function()
+            require('lspconfig').ruff.setup({
+                init_options = {
+                    settings = {
+                        lint = {
+                            ignore = { "CPY001", "DOC201" }
+                        },
+                        configurationPreference = "filesystemFirst",
+                    },
+                },
             })
-        end,
+        end
     },
 })
 
