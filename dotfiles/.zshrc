@@ -90,15 +90,19 @@ plugins=(
   git
   docker
   docker-compose
-  direnv
+  # direnv
   colored-man-pages
   golang
   poetry
 )
 
 # Normally this should be placed below, but for autocompletion, run this before sourcing oh-my-zsh.sh
-if [ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+case "$(uname -s)" in
+    Linux*)     brewPath="/home/linuxbrew/.linuxbrew/bin/brew" ;;
+    Darwin*)    brewPath="/opt/homebrew/bin/brew";;
+esac
+if [ -f "$brewPath" ]; then
+    eval "$($brewPath shellenv)"
     FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 fi
 
@@ -147,8 +151,8 @@ export XDG_RUNTIME_DIR=/run/user/$UID
 # Use Docker BuildKit:
 export DOCKER_BUILDKIT=1
 
-if [ -f "/home/linuxbrew/.linuxbrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
-    source "/home/linuxbrew/.linuxbrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+if [ -f "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
+  source "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
 fi
 
 export NVM_DIR="$HOME/nvm"
