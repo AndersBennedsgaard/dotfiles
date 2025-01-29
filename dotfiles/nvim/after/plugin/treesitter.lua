@@ -1,5 +1,5 @@
 require('nvim-treesitter.configs').setup({
-    ensure_installed = { 'python', 'go', 'lua', 'vim', 'vimdoc', 'query' },
+    ensure_installed = { 'python', 'go', 'lua', 'vim', 'vimdoc', 'query', 'markdown' },
 
     -- Install parser synchronously
     sync_install = false,

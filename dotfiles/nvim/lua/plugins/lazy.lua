@@ -47,7 +47,6 @@ local plugins = {
   { 'stevearc/conform.nvim' },  -- Autoformat
   { 'mfussenegger/nvim-lint' }, -- Linters
   { 'airblade/vim-gitgutter' }, -- Git information in the gutter
-  { 'github/copilot.vim' },
   {
     'VonHeikemen/lsp-zero.nvim',
     branch = 'v3.x',
@@ -66,10 +65,30 @@ local plugins = {
       { 'L3MON4D3/LuaSnip' },     -- Required
     }
   },
+  {
+    "folke/zen-mode.nvim",
+    opts = {
+      window = {
+        width = 200,
+      }
+    }
+  },
   { 'hrsh7th/cmp-path' },
   { 'hrsh7th/cmp-buffer' },
   { 'RRethy/vim-illuminate' }, -- Highlight references
-  { 'towolf/vim-helm',      ft = 'helm' },
+  {
+    "olimorris/codecompanion.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      -- The following are optional:
+      { "MeanderingProgrammer/render-markdown.nvim", ft = { "markdown", "codecompanion" } },
+    },
+    config = true,
+    opts = {
+      log_level = "DEBUG",
+    }
+  }
 }
 
 -- import plugins

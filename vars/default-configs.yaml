@@ -14,15 +14,15 @@ user_shell: /bin/zsh
 # Upgrade all packages
 upgrade_packages: true
 
-apt_repositories:
-  - gpg_url: https://download.docker.com/linux/ubuntu/gpg
-    dest: /etc/apt/trusted.gpg.d/docker-archive-keyring.asc
-    repo: deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/docker-archive-keyring.asc] https://download.docker.com/linux/ubuntu impish stable
+apt_repositories: []
+  #  - gpg_url: https://download.docker.com/linux/ubuntu/gpg
+  #    dest: /etc/apt/trusted.gpg.d/docker-archive-keyring.asc
+  #    repo: deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/docker-archive-keyring.asc] https://download.docker.com/linux/ubuntu impish stable
 
 install_ohmyzsh: true
 
-deb_packages:
-  - url: "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"
+deb_packages: []
+  # - url: "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"
 
 # Packages installed by the package module.
 # In 'name' and 'state' format, otherwise use the object as default name
@@ -34,52 +34,38 @@ install_packages:
   - ca-certificates
   - lsb-release
   - curl
-  - wget
-  - vim
   - python3-pip
-  - tmux
-  - zsh
-  - jq
-  - containerd.io
-  - docker-ce-cli
-  - docker-ce
 
 # Packages installed with Pip
 # Either in 'name', 'state', 'version' format, or use the object as default name
-pip_packages:
-  - flake8
-  - black
-  - virtualenv
-  - ruff
+pip_packages: []
+  # - flake8
+  # - black
+  # - virtualenv
 
 # Packages installed with brew
 brew_packages:
+  - zsh
   - zsh-autosuggestions
+  - tmux
+  - jq
+  - wget
   - go
   - node # required by a lot of tools
   - neovim
   - yq
-  - kubectl
-  - kustomize
-  - helm
-  - kind
-  - tap: derailed/k9s
-    name: derailed/k9s/k9s
-  - tap: fluxcd/tap
-    name: fluxcd/tap/flux
-  - direnv
-  - tap: int128/kubelogin
-    name: int128/kubelogin/kubelogin
-  - gh
   - tree
-  - act
   - shellcheck # for bash language server
+  - ruff
+  - uv
+  - ollama
 
 # Packages installed with flatpak
-flatpak_packages: # TODO: Add flatpak support
-  - chat.rocket.RocketChat
-  - com.slack.Slack
-  - us.zoom.Zoom
+# TODO: Add flatpak support
+flatpak_packages: []
+  #  - chat.rocket.RocketChat
+  #  - com.slack.Slack
+  #  - us.zoom.Zoom
 
 get_files: []
 # - url: https://golang.org/dl/go1.17.7.linux-amd64.tar.gz
@@ -94,7 +80,6 @@ get_files: []
 dotfiles:
   - dotfiles/.vimrc
   - dotfiles/.bashrc
-  - dotfiles/.bash_custom
   - dotfiles/.zshrc
   - dotfiles/.aliases
   - dotfiles/.tmux.conf

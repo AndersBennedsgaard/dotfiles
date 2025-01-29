@@ -108,6 +108,17 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# source .bash_custom if it exists 
-[ -f "$HOME/.bash_custom" ] && source "$HOME/.bash_custom"  
+export VISUAL=vim
+export EDITOR="$VISUAL"
+
+[ -d "$HOME/.local/bin/" ] && export PATH="$HOME/.local/bin:$PATH"
+
+[ -d "$HOME/go/bin/" ] && export PATH="$HOME/go/bin:$PATH"
+
+[ -d "/usr/local/go/" ] && export PATH="/usr/local/go/bin:$PATH"
+
+# Use Docker BuildKit:
+export DOCKER_BUILDKIT=1
+
+[ -f "/home/linuxbrew/.linuxbrew/bin/brew" ] && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 

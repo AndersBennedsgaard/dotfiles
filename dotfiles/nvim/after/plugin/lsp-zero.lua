@@ -3,7 +3,7 @@ local lsp_zero = require("lsp-zero")
 -- installation of language servers
 require('mason').setup({})
 require('mason-lspconfig').setup({
-    ensure_installed = { 'lua_ls', 'gopls', 'bashls', 'yamlls', 'marksman', 'helm_ls', 'ruff' },
+    ensure_installed = { 'lua_ls', 'gopls', 'bashls', 'yamlls', 'marksman', 'pyright', 'ruff' },
     automatic_installation = false,
     handlers = {
         lsp_zero.default_setup,
@@ -12,18 +12,36 @@ require('mason-lspconfig').setup({
                 single_file_support = true,
             })
         end,
-        ruff = function()
-            require('lspconfig').ruff.setup({
-                init_options = {
-                    settings = {
-                        lint = {
-                            ignore = { "CPY001", "DOC201" }
-                        },
-                        configurationPreference = "filesystemFirst",
-                    },
-                },
-            })
-        end
+        -- pyright = function()
+        --     require('lspconfig').pyright.setup({
+        --         settings = {
+        --             pyright = {
+        --                 -- Using Ruff's import organizer
+        --                 disableOrganizeImports = true,
+        --             },
+        --             python = {
+        --                 analysis = {
+        --                     -- Ignore all files for analysis to exclusively use Ruff for linting
+        --                     ignore = { '*' },
+        --                 },
+        --             },
+        --         },
+        --     })
+        -- end,
+        -- ruff = function()
+        --     require('lspconfig').ruff.setup({
+        --         trace = 'messages',
+        --         init_options = {
+        --             settings = {
+        --                 logLevels = 'debug',
+        --                 lint = {
+        --                     ignore = { "CPY001", "DOC201" }
+        --                 },
+        --                 -- configurationPreference = "filesystemFirst",
+        --             },
+        --         },
+        --     })
+        -- end
     },
 })
 

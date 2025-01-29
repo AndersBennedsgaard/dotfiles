@@ -8,23 +8,23 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-# ZSH_THEME="robbyrussell"
-ZSH_THEME="random"
-ZSH_THEME_RANDOM_IGNORED=(
-    "eastwood" "agnoster" "humza" "michelebologna" "wuffers" "example"
-    "jonathan" "amuse" "apple" "simonoff" "mira" "obraun" "lambda"
-    "blinks" "intheloop" "frontcube" "funky" "rixius" "smt" "re5et"
-    "frisk" "af-magic" "kiwi" "peepcode" "skaro" "darkblood" "mortalscumbag"
-    "refined" "kardan" "pygmalion" "sammy" "garyblessington"
-    "pygmalion-virtualenv" "trapd00r" "avit" "tonotdo" "emotty"
-    "bureau" "kolo" "philips" "evan" "candy-kingdom" "half-life"
-    "sporty_256" "awesomepanda" "rgm" "arrow" "gentoo" "bira" "Soliah"
-    "junkfood" "flazz" "3den" "sorin" "dpoggi" "kennethreitz" "juanghurtado"
-    "candy" "sunrise" "imajes" "josh" "superjarin" "dstufft" "cypher"
-    "lukerandall" "terminalparty" "risto" "sunaku" "macovsky-ruby"
-    "linuxonly" "mgutz" "jbergantine" "aussiegeek" "gallois" "dogenpunk"
-    "tjkirch"
-)
+ZSH_THEME="robbyrussell"
+# ZSH_THEME_RANDOM_IGNORED=(
+#     "eastwood" "agnoster" "humza" "michelebologna" "wuffers" "example"
+#     "jonathan" "amuse" "apple" "simonoff" "mira" "obraun" "lambda"
+#     "blinks" "intheloop" "frontcube" "funky" "rixius" "smt" "re5et"
+#     "frisk" "af-magic" "kiwi" "peepcode" "skaro" "darkblood" "mortalscumbag"
+#     "refined" "kardan" "pygmalion" "sammy" "garyblessington"
+#     "pygmalion-virtualenv" "trapd00r" "avit" "tonotdo" "emotty"
+#     "bureau" "kolo" "philips" "evan" "candy-kingdom" "half-life"
+#     "sporty_256" "awesomepanda" "rgm" "arrow" "gentoo" "bira" "Soliah"
+#     "junkfood" "flazz" "3den" "sorin" "dpoggi" "kennethreitz" "juanghurtado"
+#     "candy" "sunrise" "imajes" "josh" "superjarin" "dstufft" "cypher"
+#     "lukerandall" "terminalparty" "risto" "sunaku" "macovsky-ruby"
+#     "linuxonly" "mgutz" "jbergantine" "aussiegeek" "gallois" "dogenpunk"
+#     "tjkirch" "murilasso" "fox" "fishy" "rkj-repos" "dieter" "cloud"
+#     "maran"
+# )
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -88,11 +88,9 @@ HIST_STAMPS="yyyy-mm-dd"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   git
-  kube-ps1
   docker
   docker-compose
   direnv
-  aws
   colored-man-pages
   golang
   poetry
@@ -137,52 +135,17 @@ fi
 
 export VISUAL=vim
 export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_RUNTIME_DIR=/run/user/$UID
 
-if command -v arkade &> /dev/null; then
-    export PATH="$PATH:$HOME/.arkade/bin/"
-fi
+# When running on WSL, create a symlink to the browser, and set the BROWSER environment variable
+# Otherwise 'open', 'xdg-open' and similar, wont work
+[ -f "/proc/sys/fs/binfmt_misc/WSLInterop" ] && export BROWSER="$HOME/firefox.exe"
 
-if [ -d "/opt/mssql-tools/bin/" ]; then
-    export PATH="/opt/mssql-tools/bin/:$PATH"
-fi
-
-if [ -d "$HOME/.krew/" ]; then
-    export PATH="$HOME/.krew/bin:$PATH"
-fi
-
-if [ -d "$HOME/go/bin/" ]; then
-    export PATH="$HOME/go/bin:$PATH"
-fi
-
-if [ -d "$HOME/JetBrains/GoLand-2022.1/bin" ]; then
-    export PATH="$HOME/JetBrains/GoLand-2022.1/bin:$PATH"
-fi
-
-[ -f "$HOME/.pyenv/bin/pyenv" ] && export PATH="$HOME/.pyenv/bin:$PATH"
+[ -d "$HOME/.local/bin" ] && export PATH="$HOME/.local/bin:$PATH"
+[ -d "$HOME/go/bin" ] && export PATH="$HOME/go/bin:$PATH"
 
 # Use Docker BuildKit:
 export DOCKER_BUILDKIT=1
-export PROMPT='$(kube_ps1)'$PROMPT
-
-function ignore_default_namespace () {
-    if [ "$1" != "default" ]; then
-        echo "$1"
-    fi
-}
-
-function truncate_long_contexts () {
-    # if the context is longer than 15 characters, remove those and replace with '...'
-    echo "$1" | sed 's/\(.\{15\}\).*/\1.../'
-}
-
-export KUBE_PS1_NAMESPACE_FUNCTION=ignore_default_namespace
-export KUBE_PS1_CLUSTER_FUNCTION=truncate_long_contexts
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/google-cloud-sdk/path.zsh.inc"; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/google-cloud-sdk/completion.zsh.inc"; fi
 
 if [ -f "/home/linuxbrew/.linuxbrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
     source "/home/linuxbrew/.linuxbrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
@@ -195,16 +158,5 @@ export NVM_DIR="$HOME/nvm"
 autoload -U compinit; compinit
 
 autoload -U +X bashcompinit && bashcompinit
-
-if command -v terraform &> /dev/null; then
-    tf_ver="$(terraform --version --json | jq '.terraform_version' -r)"
-    complete -o nospace -C "/home/linuxbrew/.linuxbrew/Cellar/terraform/$tf_ver/bin/terraform" terraform
-fi
-
-if command -v pyenv &> /dev/null; then
-    export PYENV_ROOT="$HOME/.pyenv"
-    [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-    eval "$(pyenv init -)"
-fi
 
 [ -d "$HOME/.cargo" ] && . "$HOME/.cargo/env"
