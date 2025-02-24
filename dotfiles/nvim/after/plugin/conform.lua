@@ -5,9 +5,11 @@ require("conform").setup({
     lsp_fallback = true,
   },
   formatters_by_ft = {
-    lua = { 'stylua' },
-    go = { 'goimports' },
-    python = { 'ruff_format' },
+    lua = { "stylua" },
+    go = { "goimports" },
+    python = { "ruff_format" },
+    javascript = { { "prettierd", "prettier" } },
+    typescript = { { "prettierd", "prettier" } },
     -- Conform can also run multiple formatters sequentially
     -- python = { "isort", "black" },
     --

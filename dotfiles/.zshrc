@@ -139,7 +139,12 @@ fi
 
 export VISUAL=vim
 export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_RUNTIME_DIR=/run/user/$UID
+case "$(uname -s)" in
+    Linux*)
+      export XDG_RUNTIME_DIR=/run/user/$UID ;;
+    Darwin*)
+      export XDG_RUNTIME_DIR=/tmp ;;
+esac
 
 # When running on WSL, create a symlink to the browser, and set the BROWSER environment variable
 # Otherwise 'open', 'xdg-open' and similar, wont work
@@ -154,6 +159,9 @@ export DOCKER_BUILDKIT=1
 if [ -f "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
   source "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
 fi
+
+# make use of coreutils (rm, ls, dir, etc.) on Mac
+[ -d "$(brew --prefix)/opt/coreutils/libexec/gnubin" ] && export PATH="$(brew --prefix)/opt/coreutils/libexec/gnubin:$PATH"
 
 export NVM_DIR="$HOME/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm

@@ -59,6 +59,9 @@ brew_packages:
   - ruff
   - uv
   - ollama
+  - ripgrep # search tool with regex support and respect gitignore. used by nvim-telescope
+  - fd # 'find' alternative. Used by nvim-telescope
+  - coreutils # install GNU versions of 'rm', 'ls', etc. Useful for Macs
 
 # Packages installed with flatpak
 # TODO: Add flatpak support
