@@ -125,4 +125,3 @@
   loop: "{{ brew_packages }}"
   become_user: "{{ user_name }}"
   become: true
-
