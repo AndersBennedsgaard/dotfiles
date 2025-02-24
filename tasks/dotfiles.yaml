@@ -11,6 +11,6 @@
   ansible.builtin.copy:
     src: "{{ item.name | default(item) }}"
     dest: "{{ item.dest | default('~/' + (item.name | default(item) | basename)) }}"
-    mode: preserve
+    state: link # create symbolic link
   become: false
   loop: "{{ dotfiles }}"
