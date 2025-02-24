@@ -13,19 +13,19 @@ vim.opt.wrap = false
 vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.undofile = true
-vim.opt.undodir = os.getenv('HOME') .. '/nvim/undodir'
+vim.opt.undodir = os.getenv("HOME") .. "/nvim/undodir"
 
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣', space = '_', eol = '$', }
+vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣", space = "_", eol = "$" }
 
-vim.opt.inccommand = 'split'
+vim.opt.inccommand = "split"
 vim.opt.scrolloff = 10
-vim.opt.signcolumn = 'yes'
+vim.opt.signcolumn = "yes"
 
 vim.opt.updatetime = 50
 
 vim.opt.laststatus = 3
 
-vim.opt.colorcolumn = '120'
+vim.opt.colorcolumn = "120"
 
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
@@ -38,10 +38,10 @@ vim.g.netrw_winsize = 25
 
 -- Highlight when yanking (copying) text
 --  See `:help vim.highlight.on_yank()`
-vim.api.nvim_create_autocmd('TextYankPost', {
-    desc = 'Highlight when yanking (copying) text',
-    group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
-    callback = function()
-        vim.highlight.on_yank()
-    end,
+vim.api.nvim_create_autocmd("TextYankPost", {
+  desc = "Highlight when yanking (copying) text",
+  group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
+  callback = function()
+    vim.highlight.on_yank()
+  end,
 })

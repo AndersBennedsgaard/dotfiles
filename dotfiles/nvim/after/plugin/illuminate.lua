@@ -1,11 +1,11 @@
-require('illuminate').configure({
-    providers = {
-        "lsp",
-        "treesitter",
-    },
+require("illuminate").configure({
+  providers = {
+    "lsp",
+    "treesitter",
+  },
 
-    delay = 100,
-    under_cursor = false,
+  delay = 100,
+  under_cursor = false,
 })
 
 -- set illumintated work background color and remove underline

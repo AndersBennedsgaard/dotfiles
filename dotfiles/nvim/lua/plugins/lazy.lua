@@ -1,6 +1,6 @@
 -- initialize lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
   vim.fn.system({
     "git",
     "clone",
@@ -16,66 +16,60 @@ local lazy_opts = {
   defaults = {
     -- Use latest stable plugin version for plugins that support SemVer
     -- If plugins have old releases but we require newer commits, set 'version = false'
-    version = "*"
-  }
+    version = "*",
+  },
 }
 
 local plugins = {
-  {
-    'tpope/vim-sleuth',
+  { -- detect tabstop and shiftwidth automatically
+    "tpope/vim-sleuth",
     version = false,
-  }, -- detect tabstop and shiftwidth automatically
-  {
-    'nvim-telescope/telescope.nvim',
+  },
+  { -- fuzzy finder
+    "nvim-telescope/telescope.nvim",
     dependencies = {
-      'nvim-lua/plenary.nvim',
+      "nvim-lua/plenary.nvim",
       version = false,
     },
   },
-  { 'rose-pine/neovim',               name = 'rose-pine' },
-  { 'nvim-treesitter/nvim-treesitter' },
-  {
-    'folke/lazydev.nvim',
+  { -- rose-pine theme
+    "rose-pine/neovim",
+    name = "rose-pine",
+  },
+  { "nvim-treesitter/nvim-treesitter" },
+  { -- lsp support for NeoVim Lua
+    "folke/lazydev.nvim",
     ft = "lua",
     opts = {},
-  }, -- lsp support for NeoVim Lua
-  {
-    'numToStr/Comment.nvim',
+  },
+  { -- improved comment manipulation
+    "numToStr/Comment.nvim",
     version = false,
     opts = {},
   },
-  { 'stevearc/conform.nvim' },  -- Autoformat
-  { 'mfussenegger/nvim-lint' }, -- Linters
-  { 'airblade/vim-gitgutter' }, -- Git information in the gutter
-  {
-    'VonHeikemen/lsp-zero.nvim',
-    branch = 'v3.x',
-    dependencies = {
-      -- LSP Support
-      { 'neovim/nvim-lspconfig', },            -- Required
-      { 'williamboman/mason.nvim' },           -- Optional
-      { 'williamboman/mason-lspconfig.nvim' }, -- Optional
-
-      -- Autocompletion
-      {
-        'hrsh7th/nvim-cmp',
-        version = false,
-      },                          -- Required
-      { 'hrsh7th/cmp-nvim-lsp' }, -- Required
-      { 'L3MON4D3/LuaSnip' },     -- Required
-    }
+  { "stevearc/conform.nvim" }, -- Autoformat
+  { "mfussenegger/nvim-lint" }, -- Linters
+  { "airblade/vim-gitgutter" }, -- Git information in the gutter
+  { "neovim/nvim-lspconfig" }, -- LSP support
+  { "williamboman/mason.nvim" }, -- Package manager for LSPs, DAPs, linters, and formatters
+  { "williamboman/mason-lspconfig.nvim" }, -- Mason extension for LSPs
+  { -- Autocompletion engine for LSPs, and others
+    "hrsh7th/nvim-cmp",
+    version = false,
   },
-  {
+  { "hrsh7th/cmp-nvim-lsp" }, -- nvim-csp plugin to autocomplete based on LSP capabilities
+  { "hrsh7th/cmp-path" }, -- nvim-csp plugin to autocomplete paths
+  { "hrsh7th/cmp-buffer" }, -- nvim-csp plugin to autocomplete words in the buffer
+  { "L3MON4D3/LuaSnip" }, -- Snippet engine
+  { -- Zen mode
     "folke/zen-mode.nvim",
     opts = {
       window = {
         width = 200,
-      }
-    }
+      },
+    },
   },
-  { 'hrsh7th/cmp-path' },
-  { 'hrsh7th/cmp-buffer' },
-  { 'RRethy/vim-illuminate' }, -- Highlight references
+  { "RRethy/vim-illuminate" }, -- Highlight references
   {
     "olimorris/codecompanion.nvim",
     dependencies = {
@@ -87,8 +81,8 @@ local plugins = {
     config = true,
     opts = {
       log_level = "DEBUG",
-    }
-  }
+    },
+  },
 }
 
 -- import plugins
