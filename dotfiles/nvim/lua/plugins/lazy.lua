@@ -83,6 +83,11 @@ local plugins = {
       log_level = "DEBUG",
     },
   },
+  { -- Highlight TODO comments
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {},
+  },
 }
 
 -- import plugins
