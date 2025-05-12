@@ -8,8 +8,8 @@ require("conform").setup({
     lua = { "stylua" },
     go = { "goimports" },
     python = { "ruff_format" },
-    javascript = { { "prettierd", "prettier" } },
-    typescript = { { "prettierd", "prettier" } },
+    javascript = { "prettierd", "prettier", stop_after_first = true },
+    typescript = { "prettierd", "prettier", stop_after_first = true },
     -- Conform can also run multiple formatters sequentially
     -- python = { "isort", "black" },
     --

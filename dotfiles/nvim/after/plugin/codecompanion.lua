@@ -6,13 +6,45 @@ require("codecompanion").setup({
   },
   strategies = {
     chat = {
-      adapter = "deepseekCoder",
+      adapter = "gemma3",
     },
     inline = {
-      adapter = "deepseekCoder",
+      adapter = "gemma3",
     },
   },
   adapters = {
+    gemma3 = function()
+      return require("codecompanion.adapters").extend("ollama", {
+        name = "gemma3",
+        schema = {
+          model = {
+            default = "gemma3:27b",
+          },
+          num_ctx = {
+            default = 16384,
+          },
+          num_predict = {
+            default = -1,
+          },
+        },
+      })
+    end,
+    codegemma = function()
+      return require("codecompanion.adapters").extend("ollama", {
+        name = "codegemma",
+        schema = {
+          model = {
+            default = "codegemma:7b",
+          },
+          num_ctx = {
+            default = 16384,
+          },
+          num_predict = {
+            default = -1,
+          },
+        },
+      })
+    end,
     deepseekCoder = function()
       return require("codecompanion.adapters").extend("ollama", {
         name = "deepseekCoder", -- Give this adapter a different name to differentiate it from the default ollama adapter

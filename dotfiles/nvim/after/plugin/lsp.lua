@@ -20,7 +20,7 @@ require("mason-lspconfig").setup({
     "marksman",
     "pyright",
     "ruff",
-    "tsserver",
+    "ts_ls",
   },
   handler = {
     function(server_name)
@@ -63,4 +63,14 @@ lsp.ruff.setup({
     },
   },
 })
-lsp.tsserver.setup({})
+lsp.ts_ls.setup({})
+-- lsp.nil_ls.setup({})
+lsp.nixd.setup({
+  cmd = { "nixd" }, -- installed by Nix
+  settings = {
+    nixd = {
+      nixpkgs = { expr = "import <nixpkgs> { }" },
+      formatting = { command = { "alejandra" } },
+    },
+  },
+})
