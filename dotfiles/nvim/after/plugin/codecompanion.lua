@@ -6,13 +6,29 @@ require("codecompanion").setup({
   },
   strategies = {
     chat = {
-      adapter = "gemma3",
+      adapter = "devstral",
     },
     inline = {
-      adapter = "gemma3",
+      adapter = "devstral",
     },
   },
   adapters = {
+    devstral = function()
+      return require("codecompanion.adapters").extend("ollama", {
+        name = "devstral",
+        schema = {
+          model = {
+            default = "devstral:latest",
+          },
+          num_ctx = {
+            default = 16384,
+          },
+          num_predict = {
+            default = -1,
+          },
+        },
+      })
+    end,
     gemma3 = function()
       return require("codecompanion.adapters").extend("ollama", {
         name = "gemma3",
