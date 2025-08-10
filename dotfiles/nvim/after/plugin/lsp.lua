@@ -22,22 +22,9 @@ require("mason-lspconfig").setup({
     "ruff",
     "ts_ls",
   },
-  handler = {
-    function(server_name)
-      require("lspconfig")[server_name].setup({})
-    end,
-  },
 })
 
-local lsp = require("lspconfig")
-lsp.lua_ls.setup({})
-lsp.gopls.setup({})
-lsp.bashls.setup({})
-lsp.yamlls.setup({})
-lsp.marksman.setup({
-  single_file_support = true,
-})
-lsp.pyright.setup({
+vim.lsp.config("pyright", {
   settings = {
     pyright = {
       -- Using Ruff's import organizer
@@ -51,7 +38,8 @@ lsp.pyright.setup({
     },
   },
 })
-lsp.ruff.setup({
+
+vim.lsp.config("ruff", {
   -- trace = 'messages',
   init_options = {
     settings = {
@@ -63,9 +51,12 @@ lsp.ruff.setup({
     },
   },
 })
-lsp.ts_ls.setup({})
--- lsp.nil_ls.setup({})
-lsp.nixd.setup({
+
+vim.lsp.config("marksman", {
+  single_file_support = true,
+})
+
+vim.lsp.config("nixd", {
   cmd = { "nixd" }, -- installed by Nix
   settings = {
     nixd = {
