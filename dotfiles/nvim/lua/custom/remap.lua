@@ -35,9 +35,6 @@ vim.keymap.set("n", "<M-k>", "<cmd>m .-2<CR>==", { desc = "Move the current line
 vim.keymap.set("v", "<M-j>", ":m '>+1<CR>gv=gv", { desc = "Move the selected lines down" })
 vim.keymap.set("v", "<M-k>", ":m '<-2<CR>gv=gv", { desc = "Move the selected lines up" })
 
--- Use <leader>z to trigger ZenMode
-vim.keymap.set("n", "<leader>z", ":ZenMode<CR>", { desc = "Shorthand for ZenMode" })
-
 -- This is where you enable features that only work
 -- if there is a language server active in the file
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -57,3 +54,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
     vim.keymap.set("n", "<F4>", "<cmd>lua vim.lsp.buf.code_action()<cr>", opts)
   end,
 })
+
+-- Wrap errors on the current line.
+vim.keymap.set("n", "<leader>e", "<cmd>lua vim.diagnostic.open_float(0, {scope='line'})<CR>")
