@@ -2,7 +2,7 @@
 -- This should be executed before you configure any language server
 local lspconfig_defaults = require("lspconfig").util.default_config
 lspconfig_defaults.capabilities =
-  vim.tbl_deep_extend("force", lspconfig_defaults.capabilities, require("cmp_nvim_lsp").default_capabilities())
+    vim.tbl_deep_extend("force", lspconfig_defaults.capabilities, require("cmp_nvim_lsp").default_capabilities())
 
 -- installation of language servers
 require("mason").setup({
@@ -56,6 +56,7 @@ vim.lsp.config("marksman", {
   single_file_support = true,
 })
 
+vim.lsp.enable("nixd")
 vim.lsp.config("nixd", {
   cmd = { "nixd" }, -- installed by Nix
   settings = {
