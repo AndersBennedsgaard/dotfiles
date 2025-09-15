@@ -47,21 +47,21 @@ local plugins = {
     version = false,
     opts = {},
   },
-  { "stevearc/conform.nvim" }, -- Autoformat
-  { "mfussenegger/nvim-lint" }, -- Linters
-  { "airblade/vim-gitgutter" }, -- Git information in the gutter
-  { "neovim/nvim-lspconfig" }, -- LSP support
-  { "williamboman/mason.nvim" }, -- Package manager for LSPs, DAPs, linters, and formatters
+  { "stevearc/conform.nvim" },             -- Autoformat
+  { "mfussenegger/nvim-lint" },            -- Linters
+  { "airblade/vim-gitgutter" },            -- Git information in the gutter
+  { "neovim/nvim-lspconfig" },             -- LSP support
+  { "williamboman/mason.nvim" },           -- Package manager for LSPs, DAPs, linters, and formatters
   { "williamboman/mason-lspconfig.nvim" }, -- Mason extension for LSPs
-  { -- Autocompletion engine for LSPs, and others
+  {                                        -- Autocompletion engine for LSPs, and others
     "hrsh7th/nvim-cmp",
     version = false,
   },
   { "hrsh7th/cmp-nvim-lsp" }, -- nvim-csp plugin to autocomplete based on LSP capabilities
-  { "hrsh7th/cmp-path" }, -- nvim-csp plugin to autocomplete paths
-  { "hrsh7th/cmp-buffer" }, -- nvim-csp plugin to autocomplete words in the buffer
-  { "L3MON4D3/LuaSnip" }, -- Snippet engine
-  { -- Zen mode
+  { "hrsh7th/cmp-path" },     -- nvim-csp plugin to autocomplete paths
+  { "hrsh7th/cmp-buffer" },   -- nvim-csp plugin to autocomplete words in the buffer
+  { "L3MON4D3/LuaSnip" },     -- Snippet engine
+  {                           -- Zen mode
     "folke/zen-mode.nvim",
     opts = {
       window = {
@@ -87,6 +87,9 @@ local plugins = {
     "folke/todo-comments.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
     opts = {},
+  },
+  { -- Github Copilot
+    "github/copilot.vim",
   },
 }
 
