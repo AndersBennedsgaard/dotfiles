@@ -4,14 +4,15 @@ require("codecompanion").setup({
       provider = "telescope",
     },
   },
-  strategies = {
-    chat = {
-      adapter = "devstral",
-    },
-    inline = {
-      adapter = "devstral",
-    },
-  },
+  -- CodeCompanion uses copilot.vim by default - no need to override this
+  -- strategies = {
+  --   chat = {
+  --     adapter = "devstral",
+  --   },
+  --   inline = {
+  --     adapter = "devstral",
+  --   },
+  -- },
   adapters = {
     devstral = function()
       return require("codecompanion.adapters").extend("ollama", {

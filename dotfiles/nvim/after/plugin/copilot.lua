@@ -22,4 +22,5 @@ vim.g.copilot_filetypes = {
   ['css'] = true,
   ['nix'] = true,
   ['markdown'] = true,
+  ['dockerfile'] = true,
 }
