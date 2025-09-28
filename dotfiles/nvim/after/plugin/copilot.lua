@@ -23,4 +23,8 @@ vim.g.copilot_filetypes = {
   ['nix'] = true,
   ['markdown'] = true,
   ['dockerfile'] = true,
+  ['yaml'] = true,
+  ['json'] = true,
+  ['sh'] = true,
+  ['bash'] = true,
 }
