@@ -24,7 +24,21 @@ require("mason-lspconfig").setup({
   },
 })
 
+-- Auto-detect python from .venv in project root
+local function get_python_path(workspace)
+  local venv = workspace .. '/.venv/bin/python'
+  if vim.fn.executable(venv) == 1 then
+    return venv
+  end
+  return vim.fn.exepath('python3') or 'python3'
+end
+
 vim.lsp.config("pyright", {
+  on_init = function(client)
+    client.config.settings.python.pythonPath = get_python_path(client.config.root_dir)
+    client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
+  end,
+
   settings = {
     pyright = {
       -- Using Ruff's import organizer
@@ -44,9 +58,6 @@ vim.lsp.config("ruff", {
   init_options = {
     settings = {
       -- logLevels = 'debug',
-      lint = {
-        ignore = { "CPY001", "DOC201" },
-      },
       configurationPreference = "filesystemFirst",
     },
   },
