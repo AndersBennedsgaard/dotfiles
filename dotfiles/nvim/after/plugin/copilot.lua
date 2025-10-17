@@ -6,25 +6,12 @@ vim.keymap.set('i', '<C-y>', 'copilot#Accept("\\<CR>")', {
 vim.g.copilot_no_tab_map = true
 
 vim.g.copilot_filetypes = {
-  ['*'] = false,
-  ['javascript'] = true,
-  ['typescript'] = true,
-  ['typescriptreact'] = true,
-  ['javascriptreact'] = true,
-  ['lua'] = true,
-  ['python'] = true,
-  ['go'] = true,
-  ['rust'] = true,
-  ['c'] = true,
-  ['cpp'] = true,
-  ['java'] = true,
-  ['html'] = true,
-  ['css'] = true,
-  ['nix'] = true,
-  ['markdown'] = true,
-  ['dockerfile'] = true,
-  ['yaml'] = true,
-  ['json'] = true,
-  ['sh'] = true,
-  ['bash'] = true,
+  ['*'] = true,
 }
+
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = { ".env", "local.settings.json" },
+  callback = function()
+    vim.b.copilot_enabled = false
+  end,
+})
