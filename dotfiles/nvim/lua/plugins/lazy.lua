@@ -91,6 +91,10 @@ local plugins = {
   { -- Github Copilot
     "github/copilot.vim",
   },
+  { -- Show indents
+    "nvimdev/indentmini.nvim",
+    opts = {},
+  },
 }
 
 -- import plugins
