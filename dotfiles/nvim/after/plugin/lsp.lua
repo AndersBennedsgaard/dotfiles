@@ -24,6 +24,22 @@ require("mason-lspconfig").setup({
   },
 })
 
+
+vim.lsp.config("marksman", {
+  single_file_support = true,
+})
+
+vim.lsp.enable("nixd")
+vim.lsp.config("nixd", {
+  cmd = { "nixd" }, -- installed by Nix
+  settings = {
+    nixd = {
+      nixpkgs = { expr = "import <nixpkgs> { }" },
+      formatting = { command = { "alejandra" } },
+    },
+  },
+})
+
 -- Auto-detect python from .venv in project root
 local function get_python_path(workspace)
   local venv = workspace .. '/.venv/bin/python'
@@ -63,17 +79,15 @@ vim.lsp.config("ruff", {
   },
 })
 
-vim.lsp.config("marksman", {
-  single_file_support = true,
-})
-
-vim.lsp.enable("nixd")
-vim.lsp.config("nixd", {
-  cmd = { "nixd" }, -- installed by Nix
+vim.lsp.config('ty', {
   settings = {
-    nixd = {
-      nixpkgs = { expr = "import <nixpkgs> { }" },
-      formatting = { command = { "alejandra" } },
-    },
-  },
+    ty = {
+      -- Prefer Pyright for language server features (code completion, go to definition, etc.)
+      -- Only use Ty for type checking
+      disableLanguageServices = true,
+      -- Report diagnostics for the entire workspace
+      diagnosticMode = 'workspace',
+    }
+  }
 })
+vim.lsp.enable("ty")
