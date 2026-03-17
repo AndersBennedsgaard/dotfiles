@@ -58,6 +58,15 @@ require("rose-pine").setup({
   -- NOTE: Highlight groups are extended (merged) by default. Disable this
   -- per group via `inherit = false`
   highlight_groups = {
+    -- Make the markdown rendering less stark
+    RenderMarkdownH1Bg = { bg = "subtle" },
+    RenderMarkdownH2Bg = { bg = "subtle" },
+    RenderMarkdownH3Bg = { bg = "subtle" },
+    RenderMarkdownH4Bg = { bg = "subtle" },
+    RenderMarkdownH5Bg = { bg = "subtle" },
+    RenderMarkdownH6Bg = { bg = "subtle" },
+    RenderMarkdownCode = { bg = "surface" },
+    RenderMarkdownCodeInline = { bg = "surface" },
     -- Comment = { fg = "foam" },
     -- StatusLine = { fg = "love", bg = "love", blend = 15 },
     -- VertSplit = { fg = "muted", bg = "muted" },

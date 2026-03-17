@@ -51,7 +51,9 @@ end
 
 vim.lsp.config("pyright", {
   on_init = function(client)
-    client.config.settings.python.pythonPath = get_python_path(client.config.root_dir)
+    -- print("Pyright client config:", vim.inspect(client.config))
+    local workspace = client.config.root_dir or vim.fn.getcwd()
+    client.config.settings.python.pythonPath = get_python_path(workspace)
     client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
   end,
 
