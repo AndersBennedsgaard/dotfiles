@@ -13,7 +13,7 @@ vim.opt.wrap = false
 vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.undofile = true
-vim.opt.undodir = os.getenv("HOME") .. "/nvim/undodir"
+vim.opt.undodir = vim.fn.stdpath("data") .. "/undodir"
 
 vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣", space = "_", eol = "$" }
 
@@ -43,6 +43,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   desc = "Highlight when yanking (copying) text",
   group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
   callback = function()
-    vim.highlight.on_yank()
+    vim.hl.on_yank()
   end,
 })

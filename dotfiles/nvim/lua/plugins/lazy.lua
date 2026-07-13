@@ -36,7 +36,7 @@ local plugins = {
     "rose-pine/neovim",
     name = "rose-pine",
   },
-  { "nvim-treesitter/nvim-treesitter" },
+  -- { "nvim-treesitter/nvim-treesitter" },
   { "nvim-treesitter/nvim-treesitter-context" },
   { -- lsp support for NeoVim Lua
     "folke/lazydev.nvim",
@@ -74,13 +74,16 @@ local plugins = {
   {                            -- Render markdown files
     "MeanderingProgrammer/render-markdown.nvim",
     ft = { "markdown", "codecompanion" },
-    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-mini/mini.nvim' },
+    dependencies = {
+      -- 'nvim-treesitter/nvim-treesitter',
+      'nvim-mini/mini.nvim',
+    },
   },
   {
     "olimorris/codecompanion.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim",
-      "nvim-treesitter/nvim-treesitter",
+      -- "nvim-treesitter/nvim-treesitter",
     },
     config = true,
     opts = {
