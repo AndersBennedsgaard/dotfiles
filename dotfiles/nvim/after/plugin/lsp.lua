@@ -18,7 +18,6 @@ require("mason-lspconfig").setup({
     "bashls",
     "yamlls",
     "marksman",
-    "pyright",
     "ruff",
     "ts_ls",
   },
@@ -39,37 +38,6 @@ vim.lsp.config("nixd", {
   },
 })
 
--- Auto-detect python from .venv in project root
-local function get_python_path(workspace)
-  local venv = workspace .. "/.venv/bin/python"
-  if vim.fn.executable(venv) == 1 then
-    return venv
-  end
-  return vim.fn.exepath("python3") or "python3"
-end
-
-vim.lsp.config("pyright", {
-  on_init = function(client)
-    -- print("Pyright client config:", vim.inspect(client.config))
-    local workspace = client.config.root_dir or vim.fn.getcwd()
-    client.config.settings.python.pythonPath = get_python_path(workspace)
-    client:notify("workspace/didChangeConfiguration", { settings = client.config.settings })
-  end,
-
-  settings = {
-    pyright = {
-      -- Using Ruff's import organizer
-      disableOrganizeImports = true,
-    },
-    python = {
-      analysis = {
-        -- Ignore all files for analysis to exclusively use Ruff for linting
-        ignore = { "*" },
-      },
-    },
-  },
-})
-
 vim.lsp.config("ruff", {
   -- trace = 'messages',
   init_options = {
@@ -80,12 +48,20 @@ vim.lsp.config("ruff", {
   },
 })
 
+-- `ty` resolves its Python environment (.venv) relative to its project root
+-- (LSP root_dir) only. In a uv workspace, only the workspace root has a .venv,
+-- while member packages (e.g. lib/) only have a pyproject.toml.
+-- Since nvim-lspconfig's default root_markers = {"ty.toml", "pyproject.toml", ".git"}
+-- stops at the member package, prefer `uv.lock` (which only exists at the workspace root) to
+-- land root_dir on the workspace root instead.
 vim.lsp.config("ty", {
+  root_dir = function(bufnr, on_dir)
+    local fname = vim.api.nvim_buf_get_name(bufnr)
+    local root = vim.fs.root(fname, "uv.lock") or vim.fs.root(fname, { "ty.toml", "pyproject.toml", ".git" })
+    on_dir(root)
+  end,
   settings = {
     ty = {
-      -- Prefer Pyright for language server features (code completion, go to definition, etc.)
-      -- Only use Ty for type checking
-      disableLanguageServices = true,
       -- Report diagnostics for the entire workspace
       diagnosticMode = "workspace",
     },
