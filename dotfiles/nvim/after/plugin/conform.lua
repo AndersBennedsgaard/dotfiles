@@ -4,16 +4,15 @@ require("conform").setup({
     timeout_ms = 500,
     lsp_fallback = true,
   },
-  formatters = {
-  },
+  formatters = {},
   formatters_by_ft = {
     lua = { "stylua" },
-    go = { "goimports" },
+    go = { "goimports-reviser" },
     python = { "ruff_format" },
-    javascript = { "prettierd", "prettier", stop_after_first = true },
-    typescript = { "prettierd", "prettier", stop_after_first = true },
-    html = { "prettierd", "prettier", stop_after_first = true },
-    css = { "prettierd", "prettier", stop_after_first = true },
-    yaml = { "prettierd", "prettier", stop_after_first = true },
+    javascript = { "prettierd" },
+    typescript = { "prettierd" },
+    html = { "prettierd" },
+    css = { "prettierd" },
+    yaml = { "prettierd" },
   },
 })

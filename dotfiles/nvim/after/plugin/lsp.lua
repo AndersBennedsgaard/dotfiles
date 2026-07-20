@@ -4,25 +4,16 @@ local lspconfig_defaults = require("lspconfig").util.default_config
 lspconfig_defaults.capabilities =
   vim.tbl_deep_extend("force", lspconfig_defaults.capabilities, require("cmp_nvim_lsp").default_capabilities())
 
--- installation of language servers
-require("mason").setup({
-  ensure_installed = {
-    "prettierd",
-    "stylua",
-  },
-})
-require("mason-lspconfig").setup({
-  ensure_installed = {
-    "lua_ls",
-    "gopls",
-    "bashls",
-    "yamlls",
-    "marksman",
-    "ruff",
-    "ts_ls",
-  },
+-- These are installed via Nix
+vim.lsp.enable({
+  "lua_ls",
+  "gopls",
+  "bashls",
+  "yamlls",
+  "ts_ls",
 })
 
+vim.lsp.enable("marksman")
 vim.lsp.config("marksman", {
   single_file_support = true,
 })
@@ -38,6 +29,7 @@ vim.lsp.config("nixd", {
   },
 })
 
+vim.lsp.enable("ruff")
 vim.lsp.config("ruff", {
   -- trace = 'messages',
   init_options = {
@@ -54,6 +46,7 @@ vim.lsp.config("ruff", {
 -- Since nvim-lspconfig's default root_markers = {"ty.toml", "pyproject.toml", ".git"}
 -- stops at the member package, prefer `uv.lock` (which only exists at the workspace root) to
 -- land root_dir on the workspace root instead.
+vim.lsp.enable("ty")
 vim.lsp.config("ty", {
   root_dir = function(bufnr, on_dir)
     local fname = vim.api.nvim_buf_get_name(bufnr)
@@ -67,4 +60,3 @@ vim.lsp.config("ty", {
     },
   },
 })
-vim.lsp.enable("ty")
