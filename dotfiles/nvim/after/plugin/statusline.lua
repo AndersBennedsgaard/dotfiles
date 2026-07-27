@@ -15,4 +15,4 @@ function _G.TreesitterStatus()
   return "%#DiagnosticWarn# No TS parser%*"
 end
 
-vim.o.statusline = "%<%f %h%m%r %{%v:lua.TreesitterStatus()%}%=%-14.(%l,%c%V%) %P"
+vim.o.statusline = "%<%f %h%m%r %{%v:lua.TreesitterStatus()%}%=%y %-14.(%l,%c%V%) %P"
