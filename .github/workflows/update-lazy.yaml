@@ -1,0 +1,143 @@
+name: Update lazy.nvim plugins
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * 1"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    env:
+      XDG_CONFIG_HOME: ${{ github.workspace }}/.config
+      LAZY_DATA_DIR: ${{ github.workspace }}/.local/share/nvim/lazy
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare Neovim config layout
+        run: |
+          mkdir -p .config/nvim
+          rsync -a --delete ./dotfiles/nvim/ .config/nvim/
+
+      - name: Update plugins
+        run: |
+          mkdir -p "$LAZY_DATA_DIR"
+
+          nix-shell --run '
+            cp .config/nvim/lazy-lock.json lazy-lock.old.json
+
+            nvim --headless "+Lazy! update" +qa
+          '
+
+      - name: Generate changelog
+        run: |
+          nix-shell --run '
+            python3 << "PY"
+              import json
+              import pathlib
+              import subprocess
+
+              old = json.load(open("lazy-lock.old.json"))
+              new = json.load(open(".config/nvim/lazy-lock.json"))
+
+              lazy_dir = pathlib.Path(
+                  ".local/share/nvim/lazy"
+              )
+
+              with open("lazy-update.md", "w") as out:
+                  out.write("# lazy.nvim plugin updates\n\n")
+
+                  changed = False
+
+                  for plugin in sorted(new):
+                      if plugin not in old:
+                          continue
+
+                      old_commit = old[plugin]["commit"]
+                      new_commit = new[plugin]["commit"]
+
+                      if old_commit == new_commit:
+                          continue
+
+                      changed = True
+
+                      repo = lazy_dir / plugin
+
+                      out.write(f"## {plugin}\n\n")
+                      out.write(
+                          f"`{old_commit[:8]}` → `{new_commit[:8]}`\n\n"
+                      )
+
+                      if repo.exists():
+                          result = subprocess.run(
+                              [
+                                  "git",
+                                  "-C",
+                                  str(repo),
+                                  "log",
+                                  "--reverse",
+                                  "--oneline",
+                                  "--no-merges",
+                                  f"{old_commit}..{new_commit}",
+                              ],
+                              capture_output=True,
+                              text=True,
+                              check=False,
+                          )
+
+                          if result.stdout.strip():
+                              out.write("```text\n")
+                              out.write(result.stdout)
+                              out.write("```\n\n")
+
+                      out.write(
+                          f"Compare: "
+                          f"`{old_commit[:8]}...{new_commit[:8]}`\n\n"
+                      )
+
+                  if not changed:
+                      out.write("No plugin updates.\n")
+          PY
+          '
+
+          echo "Lazy update markdown:"
+          cat lazy-update.md
+
+      - name: Run healthcheck
+        run: |
+          nix-shell --run '
+            set +e
+
+            nvim --headless \
+              "+redir! >healthcheck.txt" \
+              "+silent checkhealth" \
+              "+redir END" \
+              +qa
+
+            status=$?
+
+            echo "::group::Neovim healthcheck"
+            cat healthcheck.txt
+            echo "::endgroup::"
+
+            exit "$status"
+          '
+
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GH_TOKEN_FOR_FLAKE_UPDATES }}
+          branch: build/lazy-update
+          commit-message: "chore: update lazy.nvim plugins"
+          title: "Update lazy.nvim plugins"
+          labels: |
+            dependencies
+            automated
+          body-path: lazy-update.md
