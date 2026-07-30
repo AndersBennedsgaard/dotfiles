@@ -21,6 +21,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Install Nix
+        uses: cachix/install-nix-action@v27
+
       - name: Prepare Neovim config layout
         run: |
           mkdir -p .config/nvim
