@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      XDG_CONFIG_HOME: ${{ github.workspace }}/.config
+      XDG_CONFIG_HOME: ${{ github.workspace }}/dotfiles
       LAZY_DATA_DIR: ${{ github.workspace }}/.local/share/nvim/lazy
 
     steps:
@@ -24,90 +24,82 @@ jobs:
       - name: Install Nix
         uses: cachix/install-nix-action@v27
 
-      - name: Prepare Neovim config layout
-        run: |
-          mkdir -p .config/nvim
-          rsync -a --delete ./dotfiles/nvim/ .config/nvim/
-
       - name: Update plugins
         run: |
           mkdir -p "$LAZY_DATA_DIR"
+          cp $XDG_CONFIG_HOME/nvim/lazy-lock.json lazy-lock.old.json
 
-          nix-shell --run '
-            cp .config/nvim/lazy-lock.json lazy-lock.old.json
-
+          nix develop --command bash -c '
             nvim --headless "+Lazy! update" +qa
           '
 
       - name: Generate changelog
         run: |
-          nix-shell --run '
-            python3 << "PY"
-              import json
-              import pathlib
-              import subprocess
+          nix develop --command python -c '
+          import json
+          import pathlib
+          import subprocess
 
-              old = json.load(open("lazy-lock.old.json"))
-              new = json.load(open(".config/nvim/lazy-lock.json"))
+          old = json.load(open("lazy-lock.old.json"))
+          new = json.load(open("dotfiles/nvim/lazy-lock.json"))
 
-              lazy_dir = pathlib.Path(
-                  ".local/share/nvim/lazy"
-              )
+          lazy_dir = pathlib.Path(
+              ".local/share/nvim/lazy"
+          )
 
-              with open("lazy-update.md", "w") as out:
-                  out.write("# lazy.nvim plugin updates\n\n")
+          with open("lazy-update.md", "w") as out:
+              out.write("# lazy.nvim plugin updates\n\n")
 
-                  changed = False
+              changed = False
 
-                  for plugin in sorted(new):
-                      if plugin not in old:
-                          continue
+              for plugin in sorted(new):
+                  if plugin not in old:
+                      continue
 
-                      old_commit = old[plugin]["commit"]
-                      new_commit = new[plugin]["commit"]
+                  old_commit = old[plugin]["commit"]
+                  new_commit = new[plugin]["commit"]
 
-                      if old_commit == new_commit:
-                          continue
+                  if old_commit == new_commit:
+                      continue
 
-                      changed = True
+                  changed = True
 
-                      repo = lazy_dir / plugin
+                  repo = lazy_dir / plugin
 
-                      out.write(f"## {plugin}\n\n")
-                      out.write(
-                          f"`{old_commit[:8]}` → `{new_commit[:8]}`\n\n"
+                  out.write(f"## {plugin}\n\n")
+                  out.write(
+                      f"`{old_commit[:8]}` → `{new_commit[:8]}`\n\n"
+                  )
+
+                  if repo.exists():
+                      result = subprocess.run(
+                          [
+                              "git",
+                              "-C",
+                              str(repo),
+                              "log",
+                              "--reverse",
+                              "--oneline",
+                              "--no-merges",
+                              f"{old_commit}..{new_commit}",
+                          ],
+                          capture_output=True,
+                          text=True,
+                          check=False,
                       )
 
-                      if repo.exists():
-                          result = subprocess.run(
-                              [
-                                  "git",
-                                  "-C",
-                                  str(repo),
-                                  "log",
-                                  "--reverse",
-                                  "--oneline",
-                                  "--no-merges",
-                                  f"{old_commit}..{new_commit}",
-                              ],
-                              capture_output=True,
-                              text=True,
-                              check=False,
-                          )
+                      if result.stdout.strip():
+                          out.write("```text\n")
+                          out.write(result.stdout)
+                          out.write("```\n\n")
 
-                          if result.stdout.strip():
-                              out.write("```text\n")
-                              out.write(result.stdout)
-                              out.write("```\n\n")
+                  out.write(
+                      f"Compare: "
+                      f"`{old_commit[:8]}...{new_commit[:8]}`\n\n"
+                  )
 
-                      out.write(
-                          f"Compare: "
-                          f"`{old_commit[:8]}...{new_commit[:8]}`\n\n"
-                      )
-
-                  if not changed:
-                      out.write("No plugin updates.\n")
-          PY
+              if not changed:
+                  out.write("No plugin updates.\n")
           '
 
           echo "Lazy update markdown:"
@@ -115,7 +107,7 @@ jobs:
 
       - name: Run healthcheck
         run: |
-          nix-shell --run '
+          nix develop --command bash -c '
             set +e
 
             nvim --headless \
