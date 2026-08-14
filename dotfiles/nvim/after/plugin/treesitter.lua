@@ -2,6 +2,7 @@
 
 -- Filetypes without their own grammar, reusing another language's parser/queries.
 vim.treesitter.language.register("hcl", "terraform")
+vim.treesitter.language.register("bash", "sh")
 
 -- Start tree-sitter highlighting for any filetype whose parser is installed,
 -- whatever the source (nix, manually compiled, etc). No per-filetype list to
