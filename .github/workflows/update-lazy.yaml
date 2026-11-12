@@ -29,9 +29,7 @@ jobs:
           mkdir -p "$LAZY_DATA_DIR"
           cp $XDG_CONFIG_HOME/nvim/lazy-lock.json "${RUNNER_TEMP}/lazy-lock.old.json"
 
-          nix develop --command bash -c '
-            nvim --headless "+Lazy! update" +qa
-          '
+          nix develop --command nvim --headless "+Lazy! update" +qa
 
       - name: Generate changelog
         run: |
