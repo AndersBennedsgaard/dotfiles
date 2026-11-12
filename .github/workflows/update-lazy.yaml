@@ -27,83 +27,19 @@ jobs:
       - name: Update plugins
         run: |
           mkdir -p "$LAZY_DATA_DIR"
-          cp $XDG_CONFIG_HOME/nvim/lazy-lock.json lazy-lock.old.json
+          cp $XDG_CONFIG_HOME/nvim/lazy-lock.json "${RUNNER_TEMP}/lazy-lock.old.json"
 
-          nix develop --command bash -c '
-            nvim --headless "+Lazy! update" +qa
-          '
+          nix develop --command nvim --headless "+Lazy! update" +qa
 
       - name: Generate changelog
         run: |
-          nix develop --command python -c '
-          import json
-          import pathlib
-          import subprocess
-
-          old = json.load(open("lazy-lock.old.json"))
-          new = json.load(open("dotfiles/nvim/lazy-lock.json"))
-
-          lazy_dir = pathlib.Path(
-              ".local/share/nvim/lazy"
-          )
-
-          with open("lazy-update.md", "w") as out:
-              out.write("# lazy.nvim plugin updates\n\n")
-
-              changed = False
-
-              for plugin in sorted(new):
-                  if plugin not in old:
-                      continue
-
-                  old_commit = old[plugin]["commit"]
-                  new_commit = new[plugin]["commit"]
-
-                  if old_commit == new_commit:
-                      continue
-
-                  changed = True
-
-                  repo = lazy_dir / plugin
-
-                  out.write(f"## {plugin}\n\n")
-                  out.write(
-                      f"`{old_commit[:8]}` → `{new_commit[:8]}`\n\n"
-                  )
-
-                  if repo.exists():
-                      result = subprocess.run(
-                          [
-                              "git",
-                              "-C",
-                              str(repo),
-                              "log",
-                              "--reverse",
-                              "--oneline",
-                              "--no-merges",
-                              f"{old_commit}..{new_commit}",
-                          ],
-                          capture_output=True,
-                          text=True,
-                          check=False,
-                      )
-
-                      if result.stdout.strip():
-                          out.write("```text\n")
-                          out.write(result.stdout)
-                          out.write("```\n\n")
-
-                  out.write(
-                      f"Compare: "
-                      f"`{old_commit[:8]}...{new_commit[:8]}`\n\n"
-                  )
-
-              if not changed:
-                  out.write("No plugin updates.\n")
-          '
+          nix develop --command python scripts/generate-lazy-changelog.py \
+            --old-lock "${RUNNER_TEMP}/lazy-lock.old.json" \
+            --new-lock dotfiles/nvim/lazy-lock.json \
+            --out "${RUNNER_TEMP}/LAZY_CHANGELOG.md"
 
           echo "Lazy update markdown:"
-          cat lazy-update.md
+          cat "${RUNNER_TEMP}/LAZY_CHANGELOG.md"
 
       - name: Run healthcheck
         run: |
@@ -111,7 +47,7 @@ jobs:
             set +e
 
             nvim --headless \
-              "+redir! >healthcheck.txt" \
+              "+redir! >${RUNNER_TEMP}/healthcheck.txt" \
               "+silent checkhealth" \
               "+redir END" \
               +qa
@@ -119,11 +55,14 @@ jobs:
             status=$?
 
             echo "::group::Neovim healthcheck"
-            cat healthcheck.txt
+            cat "${RUNNER_TEMP}/healthcheck.txt"
             echo "::endgroup::"
 
             exit "$status"
           '
+
+      - name: Check changed files
+        run: git status --short
 
       - name: Create pull request
         uses: peter-evans/create-pull-request@v7
@@ -135,4 +74,6 @@ jobs:
           labels: |
             dependencies
             automated
-          body-path: lazy-update.md
+          body-path: "${{ runner.temp }}/LAZY_CHANGELOG.md"
+          add-paths: |
+            dotfiles/nvim/lazy-lock.json
