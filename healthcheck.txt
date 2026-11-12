@@ -1,0 +1,11 @@
+
+Running healthchecks...
+Error detected while processing command line:Failed to source `/home/runner/.local/share/nvim/lazy/codecompanion.nvim/plugin/codecompanion.lua`
+
+vim/_editor.lua:0: /home/runner/work/dotfiles/dotfiles/dotfiles/nvim/init.lua..nvim_exec2() called at /home/runner/work/dotfiles/dotfiles/dotfiles/nvim/init.lua:0[1]../home/runner/.local/share/nvim/lazy/codecompanion.nvim/plugin/codecompanion.lua: Vim(source):CodeCompanion.nvim requires Neovim 0.12+
+
+# stacktrace:
+  - vim/_editor.lua:0 _in_ **cmd**
+  - dotfiles/nvim/lua/plugins/lazy.lua:108
+  - dotfiles/nvim/lua/plugins/init.lua:1
+  - dotfiles/nvim/init.lua:3
