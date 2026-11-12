@@ -61,6 +61,9 @@ jobs:
             exit "$status"
           '
 
+      - name: Check changed files
+        run: git status --short
+
       - name: Create pull request
         uses: peter-evans/create-pull-request@v7
         with:
@@ -72,3 +75,5 @@ jobs:
             dependencies
             automated
           body-path: "${{ runner.temp }}/LAZY_CHANGELOG.md"
+          add-paths: |
+            dotfiles/nvim/lazy-lock.json
