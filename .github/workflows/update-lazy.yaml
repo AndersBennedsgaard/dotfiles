@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      XDG_CONFIG_HOME: ${{ github.workspace }}/dotfiles
+      XDG_CONFIG_HOME: ${{ github.workspace }}/nvim/dot-config/
       LAZY_DATA_DIR: ${{ github.workspace }}/.local/share/nvim/lazy
 
     steps:
@@ -27,15 +27,15 @@ jobs:
       - name: Update plugins
         run: |
           mkdir -p "$LAZY_DATA_DIR"
-          cp $XDG_CONFIG_HOME/nvim/lazy-lock.json "${RUNNER_TEMP}/lazy-lock.old.json"
+          cp nvim/dot-config/nvim/lazy-lock.json "${RUNNER_TEMP}/lazy-lock.old.json"
 
           nix develop --command nvim --headless "+Lazy! update" +qa
 
       - name: Generate changelog
         run: |
-          nix develop --command python scripts/generate-lazy-changelog.py \
+          nix develop --command python .github/scripts/generate-lazy-changelog.py \
             --old-lock "${RUNNER_TEMP}/lazy-lock.old.json" \
-            --new-lock dotfiles/nvim/lazy-lock.json \
+            --new-lock nvim/dot-config/nvim/lazy-lock.json \
             --out "${RUNNER_TEMP}/LAZY_CHANGELOG.md"
 
           echo "Lazy update markdown:"
@@ -76,4 +76,4 @@ jobs:
             automated
           body-path: "${{ runner.temp }}/LAZY_CHANGELOG.md"
           add-paths: |
-            dotfiles/nvim/lazy-lock.json
+            nvim/dot-config/nvim/lazy-lock.json
